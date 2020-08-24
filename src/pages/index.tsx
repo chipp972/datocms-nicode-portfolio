@@ -1,11 +1,13 @@
-import React from 'react'
-import { Link, graphql } from 'gatsby'
-import Masonry from 'react-masonry-component'
-import Img from 'gatsby-image'
-import Layout from "../components/layout"
+import React from 'react';
+import { Link, graphql } from 'gatsby';
+import Masonry from 'react-masonry-component';
+import Img from 'gatsby-image';
+import { Layout } from '../components/layout/layout';
+import { Hero } from '../sections/hero/hero';
 
 const IndexPage = ({ data }) => (
   <Layout>
+    <Hero />
     <Masonry className="showcase">
       {data.allDatoCmsWork.edges.map(({ node: work }) => (
         <div key={work.id} className="showcase__item">
@@ -26,9 +28,9 @@ const IndexPage = ({ data }) => (
       ))}
     </Masonry>
   </Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;
 
 export const query = graphql`
   query IndexQuery {
@@ -48,4 +50,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;
