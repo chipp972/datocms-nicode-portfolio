@@ -1,0 +1,53 @@
+$bold: 700
+
+$factor-size: 1.25
+$base-size: 12
+
+@function size($value: 0)
+  $result: $base-size
+  @for $_ from 0 to $value
+    $result: ceil($result * $factor-size)
+
+  @return $result * 1px
+
+@mixin big-title
+    font-size: size(6)
+    font-weight: $bold
+    +tablet
+        font-size: size(8)
+
+@mixin big-subtitle
+    font-size: size(5)
+    +tablet
+        font-size: size(7)
+
+@mixin title
+    font-size: size(4)
+    +tablet
+        font-size: size(6)
+
+@mixin subtitle
+    font-size: size(3)
+    line-height: 1.2
+    +tablet
+        font-size: size(5)
+
+@mixin important-text
+    font-size: size(2)
+    line-height: 1.2
+    +tablet
+        font-size: size(4)
+
+@mixin highlighted-text
+    font-size: size(1)
+    font-weight: $bold
+    +tablet
+        font-size: size(3)
+
+@mixin usual-text
+    font-size: size(1)
+    +tablet
+        font-size: size(2)
+
+@mixin small-text
+    font-size: size(0)

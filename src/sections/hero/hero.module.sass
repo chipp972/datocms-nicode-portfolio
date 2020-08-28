@@ -1,2 +1,36 @@
+@import "../../theme/variables/variables"
+
+// TODO: use typo mixin instead
+
 .hero
-    height: 100vh
+  height: 100vh
+  min-height: 100vh
+  margin-top: scale(7)
+  +tablet
+    margin-top: scale(15)
+
+  .promise
+    line-height: 1.2
+    font-weight: $bold
+    font-size: size(4)
+    +tablet
+      font-size: size(6)
+      padding: scale(6) 0
+    +desktop
+      font-size: size(7)
+    +widescreen
+      font-size: size(8)
+    
+  .subtitle
+    line-height: 1.4
+    font-size: size(2)
+    margin-top: scale(8)
+    +tablet
+      font-size: size(3)
+    +desktop
+      font-size: size(4)
+    +widescreen
+      font-size: size(5)
+
+  .transition
+    margin-top: scale(2)

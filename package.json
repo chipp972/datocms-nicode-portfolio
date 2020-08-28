@@ -12,6 +12,7 @@
     "format": "prettier --write \"src/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
+    "clsx": "1.1.1",
     "dotenv": "^8.1.0",
     "gatsby": "^2.22.10",
     "gatsby-image": "^2.2.34",

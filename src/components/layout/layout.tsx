@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'gatsby';
 import { graphql, useStaticQuery } from 'gatsby';
 import { HelmetDatoCms } from 'gatsby-source-datocms';
+import { NavBar, BottomNavBar } from '../nav/nav';
 
 const layoutQuery = graphql`
   query LayoutQuery {
@@ -79,23 +80,27 @@ type Props = {
   siteName: string;
 };
 
-const Container: React.FC<Props> = ({ setShowMenu, siteName, children }) => (
-  <div className="container__body">
-    <div className="container__mobile-header">
-      <div className="mobile-header">
-        <div className="mobile-header__menu">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setShowMenu((isVisible) => !isVisible);
-            }}
-          />
-        </div>
-        <div className="mobile-header__logo">
-          <Link to="/">{siteName}</Link>
-        </div>
+const MobileHeader: React.FC<Props> = ({ setShowMenu, siteName }) => (
+  <div className="container__mobile-header">
+    <div className="mobile-header">
+      <div className="mobile-header__menu">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setShowMenu((isVisible) => !isVisible);
+          }}
+        />
+      </div>
+      <div className="mobile-header__logo">
+        <Link to="/">{siteName}</Link>
       </div>
     </div>
+  </div>
+);
+
+const Container: React.FC<Props> = ({ children, ...props }) => (
+  <div className="container__body">
+    {/* <MobileHeader {...props} /> */}
     {children}
   </div>
 );
@@ -107,9 +112,11 @@ export const Layout: React.FC = ({ children }) => {
     <div className={`container ${showMenu ? 'is-open' : ''}`}>
       <HelmetDatoCms favicon={data.datoCmsSite.faviconMetaTags} seo={data.datoCmsHome.seoMetaTags} />
       <SideBar {...data} />
+      <NavBar />
       <Container setShowMenu={setShowMenu} siteName={data.datoCmsSite.globalSeo.siteName}>
         {children}
       </Container>
+      <BottomNavBar />
     </div>
   );
 };

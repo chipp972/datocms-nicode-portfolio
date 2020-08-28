@@ -1,0 +1,15 @@
+$factor-scale: 1.25
+$base-scale: 4
+
+@function scale($value: 1)
+  $result: $base-scale
+  @for $_ from 0 through $value
+    $result: ceil($result * $factor-scale)
+
+  @return $result * 1px
+
+$xxl-size: 60px
+$xl-size: 38px
+$l-size: 24px
+$md-size: 16px
+$sm-size: 10px

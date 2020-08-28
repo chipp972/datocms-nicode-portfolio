@@ -1,0 +1,55 @@
+@import "../../theme/variables/variables"
+
+.menu
+  display: flex
+
+  a
+    text-decoration: none
+    color: $dark-body-color
+    @include highlighted-text
+    margin: 0 scale(3)
+    +tablet
+      margin: 0 scale(4)
+
+nav.navbar
+  display: flex
+  align-items: center
+  padding: scale(4)
+
+  +tablet
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    z-index: $navbar-z-index
+    background-color: $light-bg-color
+    box-shadow: 0 0 scale(0) 0 $shadow-color
+
+  .logo
+    width: $xl-size
+    line-height: 0
+    +tablet
+      width: $xxl-size
+  .menu
+    display: none
+    +tablet
+      display: flex
+      margin-left: auto
+
+nav.bottomNav
+  position: fixed
+  bottom: 0
+  left: 0
+  right: 0
+  padding: scale(4)
+  border-top: 1px solid $border-color
+  background-color: $light-bg-color
+  z-index: $navbar-z-index
+  box-shadow: 0 0 scale(0) 0 $shadow-color
+
+  +tablet
+    display: none
+
+  .menu
+    justify-content: center
+    align-items: center
