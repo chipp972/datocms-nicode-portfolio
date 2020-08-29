@@ -5,6 +5,7 @@ import clsx from 'clsx';
 type Props = {
   component?: any;
   className?: string;
+  id?: string;
 };
 
 export const Section: React.FC<Props> = ({

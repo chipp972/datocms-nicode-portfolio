@@ -1,0 +1,24 @@
+@import "./variables";
+
+:export {
+  xxlSize: $xxl-size;
+  xlSize: $xl-size;
+  lSize: $l-size;
+  mdSize: $md-size;
+  smSize: $sm-size;
+
+  logoLightGreen: $logoLightGreen;
+  shadowColor: $shadow-color;
+
+  bgColor: $bg-color;
+  alternateBgColor: $alternate-bg-color;
+
+  tealA100: $tealA100;
+  tealA700: $tealA700;
+  greenA400: $greenA400;
+  greenA700: $greenA700;
+  lightGreenA100: $lightGreenA100;
+  amber500: $amber500;
+  amber600: $amber600;
+  amber900: $amber900;
+}

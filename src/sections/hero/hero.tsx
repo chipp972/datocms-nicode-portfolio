@@ -1,17 +1,33 @@
 import React from 'react';
-import css from './hero.module.sass';
+import { graphql, useStaticQuery } from 'gatsby';
 import { Section } from '../../components/layout';
-import { SectionTransition } from '../../components/layout/transition';
+import css from './hero.module.sass';
 
-const promise = 'Créons ensemble une expérience qui fidélisera vos clients et les incitera à vous recommander';
-const subtitle = 'Je suis <b>Nicolas Pierre-charles</b>, développeur passionné des technologies web et de design';
+const query = graphql`
+  query HeroQuery {
+    hero: datoCmsHeroSection {
+      promiseNode {
+        childMarkdownRemark {
+          html
+        }
+      }
+      subtitleNode {
+        childMarkdownRemark {
+          html
+        }
+      }
+    }
+  }
+`;
 
-export const Hero = () => (
-  <section className={css.hero}>
-    <Section component="div">
+export const Hero = () => {
+  const { hero } = useStaticQuery(query);
+  const promise = hero?.promiseNode?.childMarkdownRemark.html;
+  const subtitle = hero?.subtitleNode?.childMarkdownRemark.html;
+  return (
+    <Section className={css.hero}>
       <p className={css.promise} dangerouslySetInnerHTML={{ __html: promise }} />
       <p className={css.subtitle} dangerouslySetInnerHTML={{ __html: subtitle }} />
     </Section>
-    <SectionTransition className={css.transition} color="#f1f8e9" />
-  </section>
-);
+  );
+};

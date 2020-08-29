@@ -24,7 +24,12 @@ module.exports = {
     },
     'gatsby-plugin-offline',
     'gatsby-plugin-typescript',
-    'gatsby-plugin-anchor-links',
+    {
+      resolve: "gatsby-plugin-anchor-links",
+      options: {
+        offset: -100
+      }
+    },
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
     {

@@ -1,11 +1,7 @@
 import React from 'react';
+import css from '../theme/variables/js-variables.module.scss';
 
-type Props = {
-  size?: number;
-  className?: string;
-};
-
-export const Logo: React.FC<Props> = ({ size, className }) => {
+export const Logo: React.FC<SvgProps> = ({ size, className }) => {
   return (
     <svg
       className={className}
@@ -19,15 +15,15 @@ export const Logo: React.FC<Props> = ({ size, className }) => {
       </g>
       <path
         d="M190.043 375.224L160.279 313.677C137.908 267.418 151.013 213.188 188.87 181.797C212.436 162.256 234.92 141.445 255.553 118.829L260.798 113.08L272.994 129.194C288.043 149.077 299.527 170.22 306.311 191.643L190.043 375.224Z"
-        fill="#00AA95"
+        fill={css.tealA700}
       />
       <path
         d="M371.833 189.849L367.869 170.032C348.275 216.218 298.019 240.759 269.212 272.628C218.835 328.36 190.043 375.224 190.043 375.224H219.87C352.441 375.224 391.018 285.748 371.833 189.849V189.849Z"
-        fill="#00CC76"
+        fill={css.greenA700}
       />
       <path
         d="M367.868 170.032L360.643 172.924C342.84 180.051 324.692 186.224 306.311 191.643V191.644C295.348 194.876 284.302 197.841 273.198 200.58C225.45 212.359 190.042 255.474 190.042 306.859V375.224C190.043 375.224 314.009 296.988 367.868 170.032V170.032Z"
-        fill="#A5E887"
+        fill={css.logoLightGreen}
       />
       <defs>
         <filter
@@ -61,8 +57,8 @@ export const Logo: React.FC<Props> = ({ size, className }) => {
           x2="263"
           y2="515"
           gradientUnits="userSpaceOnUse">
-          <stop stopColor="#DEA207" />
-          <stop offset="1" stopColor="#EC7A44" />
+          <stop stopColor={css.amber500} />
+          <stop offset="1" stopColor={css.amber900} />
         </linearGradient>
       </defs>
     </svg>

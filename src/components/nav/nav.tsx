@@ -1,30 +1,75 @@
 import css from './nav.module.sass';
+import cssVar from '../../theme/variables/js-variables.module.scss';
+import './nav.sass';
 import React from 'react';
 import { Logo } from '../logo';
 import { Section } from '../layout';
 import { AnchorLink } from 'gatsby-plugin-anchor-links';
+import { graphql, useStaticQuery } from 'gatsby';
+import { gsap } from 'gsap';
+
+const query = graphql`
+  query NavQuery {
+    about: datoCmsAboutSection {
+      id
+      sectionLabel
+      isMobile
+    }
+    projects: datoCmsProjectsSection {
+      id
+      sectionLabel
+      isMobile
+    }
+    expertises: datoCmsExpertisesSection {
+      id
+      sectionLabel
+      isMobile
+    }
+    contact: datoCmsContactSection {
+      id
+      sectionLabel
+      isMobile
+    }
+  }
+`;
 
 type MenuItem = {
-  label: string;
-  sectionId: string;
+  id: string;
+  sectionLabel: string;
   isMobile: boolean;
-}
+};
 
-const menu: MenuItem[] = [
-  {label: 'À propos', sectionId: 'test', isMobile: true},
-  {label: 'Projets', sectionId: 'test', isMobile: true},
-  {label: 'Mon expertise', sectionId: 'test', isMobile: false},
-  {label: 'Me contacter', sectionId: 'test', isMobile: true},
-];
+type NavQuery = {
+  about: MenuItem;
+  projects: MenuItem;
+  expertises: MenuItem;
+  contact: MenuItem;
+};
 
-export const NavBar = () => {
+export const NavBar: React.FC = () => {
+  const menu = useStaticQuery<NavQuery>(query);
+
+  React.useEffect(() => {
+    gsap.to(`nav.${css.navbar}`, {
+      scrollTrigger: {
+        trigger: `.${css.navbar}`,
+        scrub: true,
+        start: '+=80px',
+        toggleClass: 'navbar-highlighted',
+        endTrigger: 'html',
+        end: 'bottom top'
+      },
+      ease: 'power3'
+    });
+  }, []);
+
   return (
     <Section component="nav" className={css.navbar}>
-      <Logo className={css.logo} />
+      <Logo size={cssVar.xxlSize} />
       <ul className={css.menu}>
-        {menu.map(({label, sectionId}) => (
-          <li key={`nav-${label}`}>
-            <AnchorLink to={`/#${sectionId}`} title={label} />
+        {Object.values(menu).map(({ id, sectionLabel }) => (
+          <li key={`nav-${id}`}>
+            <AnchorLink to={`/#${id}`} title={sectionLabel} />
           </li>
         ))}
       </ul>
@@ -32,15 +77,16 @@ export const NavBar = () => {
   );
 };
 
-export const BottomNavBar = () => {
+export const BottomNavBar: React.FC = () => {
+  const menu = useStaticQuery<NavQuery>(query);
   return (
     <Section component="nav" className={css.bottomNav}>
       <ul className={css.menu}>
-        {menu
-          .filter(({isMobile}) => isMobile)
-          .map(({label, sectionId}) => (
-            <li key={`bottomnav-${label}`}>
-              <AnchorLink key={label} to={`/#${sectionId}`} title={label} />
+        {Object.values(menu)
+          .filter(({ isMobile }) => isMobile)
+          .map(({ id, sectionLabel }) => (
+            <li key={`bottomnav-${id}`}>
+              <AnchorLink to={`/#${id}`} title={sectionLabel} />
             </li>
           ))}
       </ul>

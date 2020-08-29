@@ -16,20 +16,26 @@ nav.navbar
   align-items: center
   padding: scale(4)
 
+  +big-mobile
+    padding: scale(4) scale(8)
+
   +tablet
     position: fixed
     top: 0
     left: 0
     right: 0
     z-index: $navbar-z-index
-    background-color: $light-bg-color
+
+  +desktop
+    padding: scale(4) scale(10)
+
+  +widescreen
+    padding: scale(4) scale(14)
+
+  .highlighted
+    background-color: hsl(55, 100%, 100%)
     box-shadow: 0 0 scale(0) 0 $shadow-color
 
-  .logo
-    width: $xl-size
-    line-height: 0
-    +tablet
-      width: $xxl-size
   .menu
     display: none
     +tablet
@@ -43,7 +49,7 @@ nav.bottomNav
   right: 0
   padding: scale(4)
   border-top: 1px solid $border-color
-  background-color: $light-bg-color
+  background-color: white
   z-index: $navbar-z-index
   box-shadow: 0 0 scale(0) 0 $shadow-color
 

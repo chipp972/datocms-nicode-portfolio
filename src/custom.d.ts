@@ -3,6 +3,11 @@ declare module '*.module.sass' {
   export default content;
 }
 
+declare module '*.module.scss' {
+  const content: any;
+  export default content;
+}
+
 declare module '*.svg' {
   const content: any;
   export default content;
@@ -37,4 +42,9 @@ declare type PageProps<FrontMatter = any, Node = any> = {
     pathname: string;
   };
   data: PageData<FrontMatter, Node>;
+};
+
+declare type SvgProps = {
+  size?: number;
+  className?: string;
 };

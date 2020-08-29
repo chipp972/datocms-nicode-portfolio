@@ -109,14 +109,19 @@ export const Layout: React.FC = ({ children }) => {
   const [showMenu, setShowMenu] = React.useState(false);
   const data = useStaticQuery(layoutQuery);
   return (
-    <div className={`container ${showMenu ? 'is-open' : ''}`}>
-      <HelmetDatoCms favicon={data.datoCmsSite.faviconMetaTags} seo={data.datoCmsHome.seoMetaTags} />
-      <SideBar {...data} />
-      <NavBar />
-      <Container setShowMenu={setShowMenu} siteName={data.datoCmsSite.globalSeo.siteName}>
-        {children}
-      </Container>
-      <BottomNavBar />
-    </div>
+    <>
+      <div className={`container ${showMenu ? 'is-open' : ''}`}>
+        <HelmetDatoCms
+          favicon={data.datoCmsSite.faviconMetaTags}
+          seo={data.datoCmsHome.seoMetaTags}
+        />
+        <NavBar />
+        <Container setShowMenu={setShowMenu} siteName={data.datoCmsSite.globalSeo.siteName}>
+          {children}
+        </Container>
+        <BottomNavBar />
+      </div>
+      <footer id="test">FOOTER</footer>
+    </>
   );
 };

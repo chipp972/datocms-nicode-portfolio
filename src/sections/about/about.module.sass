@@ -1,0 +1,25 @@
+@import "../../theme/variables/variables";
+
+.about
+  background-color: $alternate-bg-color
+
+  .socialIconList
+    display: flex
+    justify-content: center
+    +tablet
+      justify-content: flex-start
+
+    .socialIcon
+      display: inline-flex
+      flex-direction: column
+      text-decoration: none
+      align-items: center
+      margin-left: scale(6)
+      +tablet
+        margin-left: scale(10)
+      &:first-child
+        margin-left: 0
+
+      .label
+        color: $dark-body-color
+        margin-top: scale(2)

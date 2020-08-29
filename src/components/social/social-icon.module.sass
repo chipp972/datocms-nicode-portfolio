@@ -1,0 +1,58 @@
+@import "../../theme/variables/variables"
+
+@mixin initialState
+  transition: fill 0.2s ease
+  fill: transparent
+
+.github
+  &Color
+    @include initialState
+  &Bg
+    @include initialState
+  &:hover
+    .githubColor
+      fill: #709193
+    .githubBg
+      fill: #f0f0fa
+
+.linkedin
+  &Bg
+    @include initialState
+  &Letter
+    @include initialState
+  &:hover
+    .linkedinBg
+      fill: #6E87F5
+    .linkedinLetter
+      fill: white
+
+.cv
+  .cvBg
+    @include initialState
+  .cvProfileHead
+    @include initialState
+  .cvProfileBody
+    @include initialState
+  .cvProfileBg
+    @include initialState
+  .cvPenStart
+    @include initialState
+  .cvPenBody
+    @include initialState
+  .cvPenEnd
+    @include initialState
+  &:hover
+    .cvBg
+      fill: white
+    .cvProfileHead
+      fill: $chair-color
+    .cvProfileBody
+      fill: #A5DDFF
+    .cvProfileBg
+      fill: #FE6663
+    .cvPenStart
+      fill: #9AD8FF
+    .cvPenBody
+      fill: #FFBC53
+    .cvPenEnd
+      fill: #FE6663
