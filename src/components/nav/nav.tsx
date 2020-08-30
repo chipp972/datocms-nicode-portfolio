@@ -5,49 +5,11 @@ import React from 'react';
 import { Logo } from '../logo';
 import { Section } from '../layout';
 import { AnchorLink } from 'gatsby-plugin-anchor-links';
-import { graphql, useStaticQuery } from 'gatsby';
 import { gsap } from 'gsap';
-
-const query = graphql`
-  query NavQuery {
-    about: datoCmsAboutSection {
-      id
-      sectionLabel
-      isMobile
-    }
-    projects: datoCmsProjectsSection {
-      id
-      sectionLabel
-      isMobile
-    }
-    expertises: datoCmsExpertisesSection {
-      id
-      sectionLabel
-      isMobile
-    }
-    contact: datoCmsContactSection {
-      id
-      sectionLabel
-      isMobile
-    }
-  }
-`;
-
-type MenuItem = {
-  id: string;
-  sectionLabel: string;
-  isMobile: boolean;
-};
-
-type NavQuery = {
-  about: MenuItem;
-  projects: MenuItem;
-  expertises: MenuItem;
-  contact: MenuItem;
-};
+import { useNavMenu } from './nav.hook';
 
 export const NavBar: React.FC = () => {
-  const menu = useStaticQuery<NavQuery>(query);
+  const menu = useNavMenu();
 
   React.useEffect(() => {
     gsap.to(`nav.${css.navbar}`, {
@@ -78,7 +40,7 @@ export const NavBar: React.FC = () => {
 };
 
 export const BottomNavBar: React.FC = () => {
-  const menu = useStaticQuery<NavQuery>(query);
+  const menu = useNavMenu();
   return (
     <Section component="nav" className={css.bottomNav}>
       <ul className={css.menu}>
