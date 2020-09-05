@@ -15,13 +15,11 @@ export const NavBar: React.FC = () => {
     gsap.to(`nav.${css.navbar}`, {
       scrollTrigger: {
         trigger: `.${css.navbar}`,
-        scrub: true,
-        start: '+=80px',
+        start: 80,
         toggleClass: 'navbar-highlighted',
         endTrigger: 'html',
         end: 'bottom top'
-      },
-      ease: 'power3'
+      }
     });
   }, []);
 

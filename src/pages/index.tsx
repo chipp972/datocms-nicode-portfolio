@@ -12,12 +12,12 @@ import { gsapSetup } from '../helpers/gsap-setup';
 
 gsapSetup();
 
-const IndexPage = ({ data }) => {
+const IndexPage = ({ data: { about } }) => {
   return (
     <Layout>
       <Hero />
       <SectionTransition color={cssVar.alternateBgColor} />
-      <About />
+      <About {...about} />
       <SectionTransition color={cssVar.bgColor} bgColor={cssVar.alternateBgColor} />
       <Projects />
       <SectionTransition color={cssVar.alternateBgColor} />
@@ -45,6 +45,20 @@ export const query = graphql`
             }
           }
         }
+      }
+    }
+    about: datoCmsAboutSection {
+      photo {
+        fixed(width: 300, imgixParams: { fm: "jpg", auto: "compress" }) {
+          ...GatsbyDatoCmsFixed
+        }
+      }
+      intro
+      companies
+      collaborationTitle
+      collaborations {
+        title
+        description
       }
     }
   }

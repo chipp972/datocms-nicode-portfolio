@@ -3,22 +3,85 @@
 .about
   background-color: $alternate-bg-color
 
+  .photo
+    margin: 0 auto scale(8) auto
+    max-width: 200px
+    +tablet
+      margin: 0 auto scale(10) auto
+      max-width: 300px
+
+  .intro
+    @include highlighted-text
+    margin-bottom: scale(10)
+  
+  .companiesBloc
+    display: flex
+    margin-bottom: scale(8)
+
+    .companiesText
+      @include usual-text
+      +tablet
+        flex-basis: 50%
+        padding-right: scale(5)
+
+        & p
+          padding-right: scale(5)
+
+  .technosBloc
+    display: flex
+    margin-bottom: scale(10)
+
+    .technosText
+      @include usual-text
+      +tablet
+        flex-basis: 50%
+        margin-left: auto
+        padding-left: scale(5)
+        & p
+          padding-left: scale(5)
+
+  .collaborationText
+    @include highlighted-text
+    margin-bottom: scale(6)
+  
+  .collaborations
+    display: flex
+
+    .image
+      +tablet
+        flex-basis: 40%
+
+    .collaborationList
+      +tablet
+        flex-basis: 50%
+
+      .collaborationTitle
+        @include usual-text
+        font-weight: $bold
+        margin-bottom: scale(3)
+
+      .collaborationDescription
+        margin-bottom: scale(7)
+
   .socialIconList
     display: flex
+    flex-wrap: wrap
     justify-content: center
+    padding-top: scale(6)
     +tablet
-      justify-content: flex-start
+      padding-top: scale(10)
 
     .socialIcon
       display: inline-flex
       flex-direction: column
       text-decoration: none
       align-items: center
-      margin-left: scale(6)
+      height: scale(12)
+      width: scale(12)
       +tablet
-        margin-left: scale(10)
-      &:first-child
-        margin-left: 0
+        margin-left: scale(6)
+        &:first-child
+          margin-left: 0
 
       .label
         color: $dark-body-color

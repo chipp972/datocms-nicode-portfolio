@@ -6,6 +6,7 @@
   a
     text-decoration: none
     color: $dark-body-color
+    font-weight: $bold
     @include highlighted-text
     margin: 0 scale(3)
     +tablet
@@ -14,10 +15,8 @@
 nav.navbar
   display: flex
   align-items: center
-  padding: scale(4)
-
-  +big-mobile
-    padding: scale(4) scale(8)
+  padding-top: scale(4)
+  padding-bottom: scale(4)
 
   +tablet
     position: fixed
@@ -25,12 +24,6 @@ nav.navbar
     left: 0
     right: 0
     z-index: $navbar-z-index
-
-  +desktop
-    padding: scale(4) scale(10)
-
-  +widescreen
-    padding: scale(4) scale(14)
 
   .highlighted
     background-color: hsl(55, 100%, 100%)

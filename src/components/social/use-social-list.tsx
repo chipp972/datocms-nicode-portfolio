@@ -2,11 +2,13 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { LinkedInIcon } from './linkedin-icon';
 import { CvIcon } from './cv-icon';
 import { GithubIcon } from './github-icon';
+import { NpmIcon } from './npm-icon';
 
 enum ProfileType {
   LinkedIn = 'LinkedIn',
   Github = 'Github',
-  CV = 'CV'
+  CV = 'CV',
+  NPM = 'NPM'
 }
 
 type SocialProfile = {
@@ -18,7 +20,8 @@ type SocialProfile = {
 export const icon = {
   [ProfileType.LinkedIn]: LinkedInIcon,
   [ProfileType.Github]: GithubIcon,
-  [ProfileType.CV]: CvIcon
+  [ProfileType.CV]: CvIcon,
+  [ProfileType.NPM]: NpmIcon
 };
 
 const query = graphql`
