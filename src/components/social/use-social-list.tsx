@@ -3,12 +3,14 @@ import { LinkedInIcon } from './linkedin-icon';
 import { CvIcon } from './cv-icon';
 import { GithubIcon } from './github-icon';
 import { NpmIcon } from './npm-icon';
+import { TwitterIcon } from './twitter-icon';
 
 enum ProfileType {
   LinkedIn = 'LinkedIn',
   Github = 'Github',
   CV = 'CV',
-  NPM = 'NPM'
+  NPM = 'NPM',
+  Twitter = 'Twitter'
 }
 
 type SocialProfile = {
@@ -21,7 +23,8 @@ export const icon = {
   [ProfileType.LinkedIn]: LinkedInIcon,
   [ProfileType.Github]: GithubIcon,
   [ProfileType.CV]: CvIcon,
-  [ProfileType.NPM]: NpmIcon
+  [ProfileType.NPM]: NpmIcon,
+  [ProfileType.Twitter]: TwitterIcon
 };
 
 const query = graphql`

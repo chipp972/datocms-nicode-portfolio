@@ -12,11 +12,15 @@
 
   .intro
     @include highlighted-text
-    margin-bottom: scale(10)
+    margin-bottom: scale(6)
+    +tablet
+      margin-bottom: scale(10)
   
   .companiesBloc
     display: flex
-    margin-bottom: scale(8)
+    margin-bottom: scale(6)
+    +tablet
+      margin-bottom: scale(8)
 
     .companiesText
       @include usual-text
@@ -29,7 +33,9 @@
 
   .technosBloc
     display: flex
-    margin-bottom: scale(10)
+    margin-bottom: scale(6)
+    +tablet
+      margin-bottom: scale(10)
 
     .technosText
       @include usual-text
@@ -51,17 +57,27 @@
       +tablet
         flex-basis: 40%
 
+    .collaborationImage
+      height: scale(14)
+      margin-bottom: scale(1)
+
     .collaborationList
       +tablet
-        flex-basis: 50%
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+      .collaborationListItem
+        +tablet
+          width: 30%
 
-      .collaborationTitle
-        @include usual-text
-        font-weight: $bold
-        margin-bottom: scale(3)
+        .collaborationTitle
+          @include usual-text
+          font-weight: $bold
+          margin-bottom: scale(1)
 
-      .collaborationDescription
-        margin-bottom: scale(7)
+        .collaborationDescription
+          @include small-text
+          margin-bottom: scale(10)
 
   .socialIconList
     display: flex
@@ -78,6 +94,7 @@
       align-items: center
       height: scale(12)
       width: scale(12)
+      margin-bottom: scale(4)
       +tablet
         margin-left: scale(6)
         &:first-child

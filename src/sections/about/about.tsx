@@ -4,7 +4,7 @@ import cssVar from '../../theme/variables/js-variables.module.scss';
 import css from './about.module.sass';
 import { useSocialList, icon } from '../../components/social/use-social-list';
 import { graphql, useStaticQuery } from 'gatsby';
-import Img, { FluidObject } from 'gatsby-image';
+import Img, { FixedObject, FluidObject } from 'gatsby-image';
 
 const query = graphql`
   query AboutSectionQuery {
@@ -37,6 +37,12 @@ const query = graphql`
           html
         }
       }
+      technosImage {
+        alt
+        fluid(maxWidth: 500, imgixParams: { fm: "jpg", auto: "compress" }) {
+          ...GatsbyDatoCmsFluid
+        }
+      }
       collaborationTitleNode {
         childMarkdownRemark {
           html
@@ -45,6 +51,12 @@ const query = graphql`
       collaborations {
         title
         description
+        image {
+          alt
+          fluid(maxWidth: 500, imgixParams: { fm: "jpg", auto: "compress" }) {
+            ...GatsbyDatoCmsFluid
+          }
+        }
       }
     }
   }
@@ -76,6 +88,10 @@ type AboutSectionQuery = {
         html: string;
       };
     };
+    technosImage: {
+      alt: string;
+      fluid: FluidObject;
+    };
     collaborationTitleNode: {
       childMarkdownRemark: {
         html: string;
@@ -84,6 +100,10 @@ type AboutSectionQuery = {
     collaborations: {
       title: string;
       description: string;
+      image: {
+        alt: string;
+        fluid: FluidObject;
+      };
     }[];
   };
 };
@@ -97,17 +117,18 @@ export const About: React.FC = () => {
       <section className={css.intro} dangerouslySetInnerHTML={{ __html: about.introNode.childMarkdownRemark.html }} />
       <section className={css.companiesBloc}>
         <span className={css.companiesText} dangerouslySetInnerHTML={{__html: about.companiesNode.childMarkdownRemark.html }} />
-        <Img style={{flex: 1}} fluid={about.companiesImage.fluid} alt={about.companiesImage.alt} />
+        <Img style={{flex: 1, borderRadius: 50}} fluid={about.companiesImage.fluid} alt={about.companiesImage.alt} />
       </section> 
       <section className={css.technosBloc}>
-        <Img style={{flex: 1}} fluid={about.companiesImage.fluid} alt={about.companiesImage.alt} />
+        <Img style={{flex: 1, borderRadius: 50}} fluid={about.technosImage.fluid} alt={about.technosImage.alt} />
         <span className={css.technosText} dangerouslySetInnerHTML={{__html: about.technosNode.childMarkdownRemark.html }} />
       </section>
       <section className={css.collaborationText} dangerouslySetInnerHTML={{__html: about.collaborationTitleNode.childMarkdownRemark.html }} />
       <section className={css.collaborations}>
         <ul className={css.collaborationList}>
-          {about.collaborations.map(({title, description}) => (
-            <li key={title}>
+          {about.collaborations.map(({title, description, image}) => (
+            <li className={css.collaborationListItem} key={title}>
+              <Img className={css.collaborationImage} fluid={image.fluid} alt={image.alt} />
               <h2 className={css.collaborationTitle}>{title}</h2>
               <p className={css.collaborationDescription}>{description}</p>
             </li>
