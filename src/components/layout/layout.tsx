@@ -100,7 +100,6 @@ const MobileHeader: React.FC<Props> = ({ setShowMenu, siteName }) => (
 
 const Container: React.FC<Props> = ({ children, ...props }) => (
   <div className="container__body">
-    {/* <MobileHeader {...props} /> */}
     {children}
   </div>
 );

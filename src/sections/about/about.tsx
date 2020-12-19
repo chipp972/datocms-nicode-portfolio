@@ -4,7 +4,7 @@ import cssVar from '../../theme/variables/js-variables.module.scss';
 import css from './about.module.sass';
 import { useSocialList, icon } from '../../components/social/use-social-list';
 import { graphql, useStaticQuery } from 'gatsby';
-import Img, { FixedObject, FluidObject } from 'gatsby-image';
+import Img, { FluidObject } from 'gatsby-image';
 
 const query = graphql`
   query AboutSectionQuery {
@@ -92,25 +92,51 @@ type AboutSectionQuery = {
   };
 };
 
+// eslint-disable-next-line max-lines-per-function
 export const About: React.FC = () => {
   const socialProfiles = useSocialList();
   const { about } = useStaticQuery<AboutSectionQuery>(query);
   return (
     <Section id={about.id} className={css.about}>
-      <Img className={css.photo} fluid={about.photo.fluid} style={{display: 'block'}} alt={about.photo.alt} />
-      <section className={css.intro} dangerouslySetInnerHTML={{ __html: about.introNode.childMarkdownRemark.html }} />
+      <Img
+        className={css.photo}
+        fluid={about.photo.fluid}
+        style={{ display: 'block' }}
+        alt={about.photo.alt}
+      />
+      <section
+        className={css.intro}
+        dangerouslySetInnerHTML={{ __html: about.introNode.childMarkdownRemark.html }}
+      />
       <section className={css.companiesBloc}>
-        <span className={css.companiesText} dangerouslySetInnerHTML={{__html: about.companiesNode.childMarkdownRemark.html }} />
-        <Img style={{flex: 1, borderRadius: 50}} fluid={about.companiesImage.fluid} alt={about.companiesImage.alt} />
-      </section> 
-      <section className={css.technosBloc}>
-        <Img style={{flex: 1, borderRadius: 50}} fluid={about.technosImage.fluid} alt={about.technosImage.alt} />
-        <span className={css.technosText} dangerouslySetInnerHTML={{__html: about.technosNode.childMarkdownRemark.html }} />
+        <span
+          className={css.companiesText}
+          dangerouslySetInnerHTML={{ __html: about.companiesNode.childMarkdownRemark.html }}
+        />
+        <Img
+          style={{ flex: 1, borderRadius: 50 }}
+          fluid={about.companiesImage.fluid}
+          alt={about.companiesImage.alt}
+        />
       </section>
-      <section className={css.collaborationText} dangerouslySetInnerHTML={{__html: about.collaborationTitleNode.childMarkdownRemark.html }} />
+      <section className={css.technosBloc}>
+        <Img
+          style={{ flex: 1, borderRadius: 50 }}
+          fluid={about.technosImage.fluid}
+          alt={about.technosImage.alt}
+        />
+        <span
+          className={css.technosText}
+          dangerouslySetInnerHTML={{ __html: about.technosNode.childMarkdownRemark.html }}
+        />
+      </section>
+      <section
+        className={css.collaborationText}
+        dangerouslySetInnerHTML={{ __html: about.collaborationTitleNode.childMarkdownRemark.html }}
+      />
       <section className={css.collaborations}>
         <ul className={css.collaborationList}>
-          {about.collaborations.map(({title, description, image}) => (
+          {about.collaborations.map(({ title, description, image }) => (
             <li className={css.collaborationListItem} key={title}>
               <Img className={css.collaborationImage} fluid={image.fluid} alt={image.alt} />
               <h4 className={css.collaborationTitle}>{title}</h4>
@@ -123,7 +149,12 @@ export const About: React.FC = () => {
         {socialProfiles.map(({ profileType, label, url }) => {
           const Icon = icon[profileType];
           return (
-            <a key={profileType} href={url} target="_blank" className={css.socialIcon}>
+            <a
+              key={profileType}
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className={css.socialIcon}>
               <Icon size={cssVar.xxlSize} />
               <span className={css.label}>{label}</span>
             </a>

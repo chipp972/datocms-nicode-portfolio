@@ -10,26 +10,26 @@ import cssVar from '../theme/variables/js-variables.module.scss';
 import { SectionTransition } from '../components/layout/transition';
 import { gsapSetup } from '../helpers/gsap-setup';
 import smoothscroll from 'smoothscroll-polyfill';
+import { Footer } from '../components/footer/footer';
 
 gsapSetup();
 
 typeof window !== 'undefined' && smoothscroll.polyfill();
 
-const IndexPage = ({ data: { about } }) => {
-  return (
-    <Layout>
-      <Hero />
-      <SectionTransition color={cssVar.alternateBgColor} />
-      <About {...about} />
-      <SectionTransition color={cssVar.bgColor} bgColor={cssVar.alternateBgColor} />
-      <Projects />
-      <SectionTransition color={cssVar.alternateBgColor} />
-      <Expertises />
-      <SectionTransition color={cssVar.bgColor} bgColor={cssVar.alternateBgColor} />
-      <Contact />
-    </Layout>
-  );
-};
+const IndexPage = () => (
+  <Layout>
+    <Hero />
+    <SectionTransition color={cssVar.alternateBgColor} />
+    <About />
+    <SectionTransition color={cssVar.bgColor} bgColor={cssVar.alternateBgColor} />
+    <Projects />
+    <SectionTransition color={cssVar.alternateBgColor} />
+    <Expertises />
+    <SectionTransition color={cssVar.bgColor} bgColor={cssVar.alternateBgColor} />
+    <Contact />
+    <Footer />
+  </Layout>
+);
 
 export default IndexPage;
 
@@ -48,20 +48,6 @@ export const query = graphql`
             }
           }
         }
-      }
-    }
-    about: datoCmsAboutSection {
-      photo {
-        fixed(width: 300, imgixParams: { fm: "jpg", auto: "compress" }) {
-          ...GatsbyDatoCmsFixed
-        }
-      }
-      intro
-      companies
-      collaborationTitle
-      collaborations {
-        title
-        description
       }
     }
   }

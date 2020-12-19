@@ -1,10 +1,34 @@
+import 'swiper/swiper.scss';
+import 'swiper/components/a11y/a11y.scss';
+import 'swiper/components/thumbs/thumbs.scss';
+import 'swiper/components/navigation/navigation.scss';
+import css from './projects.module.sass';
 import React from 'react';
 import { Section } from '../../components/layout';
-import { graphql, useStaticQuery } from 'gatsby';
-import { FluidObject } from 'gatsby-image';
-import { RawCarousel } from '@chipp972/carousel';
+import { useStaticQuery, graphql } from 'gatsby';
+import { Swiper } from 'swiper/react';
+import SwiperCore, { Navigation, A11y, Pagination } from 'swiper';
+import { Project } from './projects.type';
+import { ProjectSlide } from './project-slide';
 
-const query = graphql`
+SwiperCore.use([Navigation, A11y, Pagination]);
+
+export type ProjectsSectionQuery = {
+  projects: {
+    id: string;
+    title: string;
+    sectionLabel: string;
+    readMoreLabel: string;
+    challengesLabel: string;
+    checkSourceCodeLabel: string;
+    checkWebsiteLabel: string;
+    nextProjectLabel: string;
+    previousProjectLabel: string;
+    projectList: Project[];
+  };
+};
+
+export const projectsQuery = graphql`
   query ProjectsSectionQuery {
     projects: datoCmsProjectsSection {
       id
@@ -22,6 +46,11 @@ const query = graphql`
         technos
         sourceCodeUrl
         projectType
+        excerptNode {
+          childMarkdownRemark {
+            html
+          }
+        }
         name
         missionDuration
         challenges
@@ -47,90 +76,34 @@ const query = graphql`
   }
 `;
 
-enum ProjectType {
-  Mission = 'Mission',
-  Project = 'Projet',
-  CaseStudy = 'Étude de cas'
-}
-
-type Project = {
-  id: string;
-  websiteUrl?: string;
-  sourceCodeUrl?: string;
-  technos: string;
-  projectType: ProjectType;
-  name: string;
-  missionDuration?: number;
-  challenges: string[];
-  contextNode: MarkdownField;
-  mainImage: {
-    alt: string;
-    fluid: FluidObject;
-  };
-  screenshots: {
-    alt: string;
-    fluid: FluidObject;
-  }[];
-};
-
-type ProjectsSectionQuery = {
-  projects: {
-    id: string;
-    title: string;
-    sectionLabel: string;
-    readMoreLabel: string;
-    challengesLabel: string;
-    checkSourceCodeLabel: string;
-    checkWebsiteLabel: string;
-    nextProjectLabel: string;
-    previousProjectLabel: string;
-    projectList: Project[];
-  };
-};
-
-const slideStyle: React.CSSProperties = {
-  height: 500,
-  width: 500,
-  color: 'white',
-  textAlign: 'center',
-  fontSize: 50
-};
-
 export const Projects: React.FC = () => {
-  const { projects } = useStaticQuery<ProjectsSectionQuery>(query);
-  const ref = React.useRef(null);
-  console.log({ projects });
+  const { projects } = useStaticQuery<ProjectsSectionQuery>(projectsQuery);
+  const [swiperRef, setSwiperRef] = React.useState(null);
+  const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
 
   return (
-    <Section id={projects.id} style={{ position: 'relative', height: '100vh', overflowX: 'hidden'}}>
-      <button onClick={() => ref.current.slide(0)}>jump to first</button>
-      <button onClick={() => ref.current.prev()}>prev</button>
-      <button onClick={() => ref.current.next()}>next</button>
-      <button onClick={() => ref.current.slide(6)}>jump to last</button>
-      <div style={{ display: 'flex', position: 'absolute', left: 0, top: 100 }}>
-        <RawCarousel
-          ref={ref}
-          id="test-raw"
-          swipeOptions={
-            {
-              widthOfSiblingSlidePreview: 400,
-              // continuous: false,
-              auto: 5000
-              // swiping: action('swipe'),
-              // callback: action('transition start'),
-              // transitionEnd: action('transition end')
-            }
-          }>
-          <div style={{ backgroundColor: 'red', ...slideStyle }}>1</div>
-          <div style={{ backgroundColor: 'blue', ...slideStyle }}>2</div>
-          <div style={{ backgroundColor: 'green', ...slideStyle }}>3</div>
-          <div style={{ backgroundColor: 'yellow', ...slideStyle }}>4</div>
-          <div style={{ backgroundColor: 'orange', ...slideStyle }}>5</div>
-          <div style={{ backgroundColor: 'purple', ...slideStyle }}>6</div>
-          <div style={{ backgroundColor: 'black', ...slideStyle }}>7</div>
-        </RawCarousel>
-      </div>
-      PROJECTS
+    <Section className={css.projects} id={projects.id}>
+      <h2 className={css.title}>{projects.title}</h2>
+      <Swiper
+        slidesPerView={swiperRef?.device.ios || swiperRef?.device.android ? 1 : 2}
+        spaceBetween={50}
+        centeredSlides
+        grabCursor
+        onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
+        onSwiper={setSwiperRef}
+        navigation
+        pagination={{ clickable: true }}>
+        <div className="swiper-wrapper">
+          {projects.projectList.map((project, index) => (
+            <ProjectSlide
+              key={project.id}
+              {...project}
+              readMoreLabel={projects.readMoreLabel}
+              isCurrentSlide={currentSlideIndex === index}
+            />
+          ))}
+        </div>
+      </Swiper>
     </Section>
   );
 };

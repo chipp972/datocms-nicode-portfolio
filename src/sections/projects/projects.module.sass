@@ -1,0 +1,32 @@
+@import "../../theme/variables/variables"
+
+.projects
+
+  .title
+    @include title
+    font-weight: $bold
+    margin-bottom: scale(7)
+
+    +tablet
+      margin-bottom: scale(10)
+
+.project
+  background-color: #c4c4c4
+  padding: scale(5) scale(8)
+
+  .title
+    @include important-text
+    margin: scale(7) 0 scale(5) 0
+  
+  .excerpt
+    @include usual-text
+    margin-bottom: scale(5)
+
+  .technoList
+    display: flex
+
+    .technoItem
+      margin-right: scale(1)
+
+  .readMoreButton
+    margin-top: scale(8)
