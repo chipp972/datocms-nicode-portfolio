@@ -9,8 +9,11 @@ import { Contact } from '../sections/contact/contact';
 import cssVar from '../theme/variables/js-variables.module.scss';
 import { SectionTransition } from '../components/layout/transition';
 import { gsapSetup } from '../helpers/gsap-setup';
+import smoothscroll from 'smoothscroll-polyfill';
 
 gsapSetup();
+
+typeof window !== 'undefined' && smoothscroll.polyfill();
 
 const IndexPage = ({ data: { about } }) => {
   return (
