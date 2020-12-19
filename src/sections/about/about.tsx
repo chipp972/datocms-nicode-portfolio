@@ -69,34 +69,18 @@ type AboutSectionQuery = {
       alt: string;
       fluid: FluidObject;
     };
-    introNode: {
-      childMarkdownRemark: {
-        html: string;
-      };
-    };
-    companiesNode: {
-      childMarkdownRemark: {
-        html: string;
-      };
-    };
+    introNode: MarkdownField;
+    companiesNode: MarkdownField;
     companiesImage: {
       alt: string;
       fluid: FluidObject;
     };
-    technosNode: {
-      childMarkdownRemark: {
-        html: string;
-      };
-    };
+    technosNode: MarkdownField;
     technosImage: {
       alt: string;
       fluid: FluidObject;
     };
-    collaborationTitleNode: {
-      childMarkdownRemark: {
-        html: string;
-      };
-    };
+    collaborationTitleNode: MarkdownField;
     collaborations: {
       title: string;
       description: string;
@@ -129,7 +113,7 @@ export const About: React.FC = () => {
           {about.collaborations.map(({title, description, image}) => (
             <li className={css.collaborationListItem} key={title}>
               <Img className={css.collaborationImage} fluid={image.fluid} alt={image.alt} />
-              <h2 className={css.collaborationTitle}>{title}</h2>
+              <h4 className={css.collaborationTitle}>{title}</h4>
               <p className={css.collaborationDescription}>{description}</p>
             </li>
           ))}

@@ -48,3 +48,9 @@ declare type SvgProps = {
   size?: number;
   className?: string;
 };
+
+declare type MarkdownField = {
+  childMarkdownRemark: {
+    html: string;
+  };
+};

@@ -1,0 +1,92 @@
+@import "../../theme/variables/variables"
+
+@mixin initialState
+  transition: fill 0.2s ease
+  fill: transparent
+
+.contact
+
+  .title
+    @include title
+    font-weight: $bold
+    margin-bottom: scale(7)
+
+    +tablet
+      margin-bottom: scale(10)
+
+  .description
+    @include important-text
+
+  .contactMethodList
+    display: flex
+    flex-flow: column nowrap
+    justify-content: center
+    padding-top: scale(6)
+    text-align: center
+    +tablet
+      padding-top: scale(10)
+      flex-flow: row nowrap
+      justify-content: space-around
+
+    .details
+      @include small-text
+      margin-top: scale(2)
+      +tablet
+        max-width: scale(15)
+        margin-right: scale(6)
+
+    .contactMethod
+      display: flex
+      flex-flow: column nowrap
+      align-items: center
+      margin-top: scale(7)
+      +tablet
+        margin-right: scale(6)
+
+      .icon
+        display: inline-flex
+        flex-direction: column
+        text-decoration: none
+        align-items: center
+        height: scale(12)
+        width: scale(12)
+        +tablet
+          margin-left: scale(6)
+          &:first-child
+            margin-left: 0
+
+      .label
+        @include usual-text
+        color: $dark-body-color
+        margin-top: scale(1)
+
+
+  .mailIcon
+    &Blue1
+      @include initialState
+    &Blue2
+      @include initialState
+    &Blue3
+      @include initialState
+    &Paper
+      @include initialState
+    &:hover
+      .mailIconBlue1
+        fill: #34bfe0
+      .mailIconBlue2
+        fill: #657fc9
+      .mailIconBlue3
+        fill: #8cceea
+      .mailIconPaper
+        fill: #fff
+      
+  .phoneIcon
+    &Main
+      @include initialState
+    &Bg
+      @include initialState
+    &:hover
+      .phoneIconMain
+        fill: #fff
+      .phoneIconBg
+        fill: #2bb140

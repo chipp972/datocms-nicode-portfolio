@@ -6,6 +6,7 @@ type Props = {
   component?: any;
   className?: string;
   id?: string;
+  style?: React.CSSProperties;
 };
 
 export const Section: React.FC<Props> = ({
