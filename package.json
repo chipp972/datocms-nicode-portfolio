@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
-    "@chipp972/carousel": "1.5.0",
+    "@chipp972/carousel": "1.5.1",
     "clsx": "1.1.1",
     "dotenv": "^8.2.0",
     "gatsby": "^2.27.4",
