@@ -27,6 +27,7 @@ const IndexPage = () => (
     <Expertises />
     <SectionTransition color={cssVar.bgColor} bgColor={cssVar.alternateBgColor} />
     <Contact />
+    <SectionTransition color={cssVar.alternateBgColor} />
     <Footer />
   </Layout>
 );

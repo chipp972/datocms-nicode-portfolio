@@ -80,15 +80,17 @@ export const Projects: React.FC = () => {
   const { projects } = useStaticQuery<ProjectsSectionQuery>(projectsQuery);
   const [swiperRef, setSwiperRef] = React.useState(null);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
+  const isMobile = swiperRef?.device.ios || swiperRef?.device.android;
 
   return (
     <Section className={css.projects} id={projects.id}>
       <h2 className={css.title}>{projects.title}</h2>
       <Swiper
-        slidesPerView={swiperRef?.device.ios || swiperRef?.device.android ? 1 : 2}
-        spaceBetween={50}
+        slidesPerView="auto"
+        speed={500}
         centeredSlides
-        grabCursor
+        spaceBetween={50}
+        grabCursor={!isMobile}
         onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
         onSwiper={setSwiperRef}
         navigation
