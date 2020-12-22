@@ -1,4 +1,5 @@
-require('dotenv').config()
+/* eslint-disable fp/no-mutation, no-undef */
+require('dotenv').config();
 
 const name = 'Nicode';
 const description = 'Développeur web freelance spécialisé en expérience client';
@@ -25,10 +26,14 @@ module.exports = {
     'gatsby-plugin-offline',
     'gatsby-plugin-typescript',
     {
-      resolve: "gatsby-plugin-anchor-links",
+      resolve: 'gatsby-plugin-anchor-links',
       options: {
         offset: -100
       }
+    },
+    {
+      resolve: 'gatsby-plugin-portal',
+      options: { id: 'dialog' }
     },
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
@@ -44,9 +49,9 @@ module.exports = {
     {
       resolve: 'gatsby-source-datocms',
       options: {
-        apiToken: process.env.DATO_API_TOKEN,
-      },
+        apiToken: process.env.DATO_API_TOKEN
+      }
     },
     'gatsby-plugin-netlify'
-  ],
-}
+  ]
+};

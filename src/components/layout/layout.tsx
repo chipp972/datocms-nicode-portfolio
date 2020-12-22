@@ -49,7 +49,6 @@ export const Layout: React.FC = ({ children }) => {
           {children}
         </main>
         <BottomNavBar />
-        <div id="dialog" />
       </div>
       <Footer />
     </>
