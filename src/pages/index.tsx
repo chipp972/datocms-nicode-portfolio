@@ -10,7 +10,6 @@ import cssVar from '../theme/variables/js-variables.module.scss';
 import { SectionTransition } from '../components/layout/transition';
 import { gsapSetup } from '../helpers/gsap-setup';
 import smoothscroll from 'smoothscroll-polyfill';
-import { Footer } from '../components/footer/footer';
 
 gsapSetup();
 
@@ -28,7 +27,6 @@ const IndexPage = () => (
     <SectionTransition color={cssVar.bgColor} bgColor={cssVar.alternateBgColor} />
     <Contact />
     <SectionTransition color={cssVar.alternateBgColor} />
-    <Footer />
   </Layout>
 );
 

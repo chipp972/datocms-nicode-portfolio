@@ -1,5 +1,12 @@
 @import '../../theme/variables/variables';
 
+.mainContainer
+  transform: translate3d(0px, 0, 0)
+  transition: transform 0.2s ease-in-out
+  +tablet
+    flex: 1
+    overflow: hidden
+
 .section
   padding: 0 scale(4)
   +big-mobile

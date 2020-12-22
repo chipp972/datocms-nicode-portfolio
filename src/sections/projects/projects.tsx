@@ -2,6 +2,7 @@ import 'swiper/swiper.scss';
 import 'swiper/components/a11y/a11y.scss';
 import 'swiper/components/thumbs/thumbs.scss';
 import 'swiper/components/navigation/navigation.scss';
+import 'swiper/components/pagination/pagination.scss';
 import css from './projects.module.sass';
 import React from 'react';
 import { Section } from '../../components/layout';
@@ -10,6 +11,7 @@ import { Swiper } from 'swiper/react';
 import SwiperCore, { Navigation, A11y, Pagination } from 'swiper';
 import { Project } from './projects.type';
 import { ProjectSlide } from './project-slide';
+import clsx from 'clsx';
 
 SwiperCore.use([Navigation, A11y, Pagination]);
 
@@ -86,6 +88,7 @@ export const Projects: React.FC = () => {
     <Section className={css.projects} id={projects.id}>
       <h2 className={css.title}>{projects.title}</h2>
       <Swiper
+        className={css.swiper}
         slidesPerView="auto"
         speed={500}
         centeredSlides
@@ -93,8 +96,8 @@ export const Projects: React.FC = () => {
         grabCursor={!isMobile}
         onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
         onSwiper={setSwiperRef}
-        navigation
-        pagination={{ clickable: true }}>
+        navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
+        pagination={{ clickable: true, el: '.swiper-pagination' }}>
         <div className="swiper-wrapper">
           {projects.projectList.map((project, index) => (
             <ProjectSlide
@@ -105,6 +108,9 @@ export const Projects: React.FC = () => {
             />
           ))}
         </div>
+        <div className={clsx(css.pagination, 'swiper-pagination')}></div>
+        <div className={clsx(css.navigation, 'swiper-button-next')}></div>
+        <div className={clsx(css.navigation, 'swiper-button-prev')}></div>
       </Swiper>
     </Section>
   );
