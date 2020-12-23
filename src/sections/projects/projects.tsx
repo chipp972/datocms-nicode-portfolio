@@ -82,11 +82,14 @@ export const Projects: React.FC = () => {
   const { projects } = useStaticQuery<ProjectsSectionQuery>(projectsQuery);
   const [swiperRef, setSwiperRef] = React.useState(null);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
+  const [isTransitionDone, setIsTransitionDone] = React.useState(true);
   const isMobile = swiperRef?.device.ios || swiperRef?.device.android;
 
   return (
-    <Section className={css.projects} id={projects.id}>
-      <h2 className={css.title}>{projects.title}</h2>
+    <>
+      <Section className={css.projects} id={projects.id}>
+        <h2 className={css.title}>{projects.title}</h2>
+      </Section>
       <Swiper
         className={css.swiper}
         slidesPerView="auto"
@@ -95,6 +98,8 @@ export const Projects: React.FC = () => {
         spaceBetween={50}
         grabCursor={!isMobile}
         onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
+        onSlideChangeTransitionStart={() => setIsTransitionDone(false)}
+        onSlideChangeTransitionEnd={() => setIsTransitionDone(true)}
         onSwiper={setSwiperRef}
         navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
         pagination={{ clickable: true, el: '.swiper-pagination' }}>
@@ -105,6 +110,7 @@ export const Projects: React.FC = () => {
               {...project}
               readMoreLabel={projects.readMoreLabel}
               isCurrentSlide={currentSlideIndex === index}
+              isTransitionDone={isTransitionDone}
             />
           ))}
         </div>
@@ -112,6 +118,6 @@ export const Projects: React.FC = () => {
         <div className={clsx(css.navigation, 'swiper-button-next')}></div>
         <div className={clsx(css.navigation, 'swiper-button-prev')}></div>
       </Swiper>
-    </Section>
+    </>
   );
 };

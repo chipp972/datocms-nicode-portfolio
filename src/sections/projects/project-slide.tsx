@@ -10,6 +10,7 @@ import { Modal } from '../../components/modal';
 type Props = {
   readMoreLabel: string;
   isCurrentSlide: boolean;
+  isTransitionDone: boolean;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -75,7 +76,8 @@ export const ProjectSlide: React.FC<Project & Props> = ({
   mainImage,
   technos,
   readMoreLabel,
-  isCurrentSlide
+  isCurrentSlide,
+  isTransitionDone
 }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [containerStyle, setContainerStyle] = React.useState(defaultStyle);
@@ -84,31 +86,32 @@ export const ProjectSlide: React.FC<Project & Props> = ({
   React.useEffect(() => {
     if (typeof document !== 'undefined') {
       if (isExpanded) {
-        document.body.style.overflowY = 'hidden';
         requestAnimationFrame(() => {
           const { top, left, width, height } = ref.current?.getBoundingClientRect();
-          setContainerStyle({ top, left, width, height, transition, zIndex, opacity: 1 });
+          setContainerStyle({ top, left, width, height, zIndex, opacity: 1 });
 
           setTimeout(() => {
+            document.body.style.overflowY = 'hidden';
             setContainerStyle(expandedStyle);
           }, 300);
         });
       } else {
         document.body.style.overflowY = 'auto';
-        const { top, left, width, height } = ref.current?.getBoundingClientRect();
-        setContainerStyle({
-          top,
-          left,
-          width,
-          height,
-          transition,
-          zIndex,
-          opacity: 0,
-          pointerEvents: 'none'
+        requestAnimationFrame(() => {
+          const { top, left, width, height } = ref.current?.getBoundingClientRect();
+          setContainerStyle({
+            top,
+            left,
+            width,
+            height,
+            zIndex,
+            opacity: 0,
+            pointerEvents: 'none'
+          });
         });
       }
     }
-  }, [isExpanded]);
+  }, [isExpanded, isTransitionDone]);
 
   return (
     <SwiperSlide
