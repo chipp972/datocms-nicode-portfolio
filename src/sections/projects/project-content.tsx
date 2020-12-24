@@ -21,35 +21,79 @@ type Props = {
 };
 
 const RessourceButtons: React.FC<{
-  websiteUrl?: string;
-  sourceCodeUrl?: string;
+  project: Project;
   checkSourceCodeLabel: string;
   checkWebsiteLabel: string;
-}> = ({
-  websiteUrl,
-  sourceCodeUrl,
-  checkWebsiteLabel,
-  checkSourceCodeLabel
-}) => (
-  <div>
-    {websiteUrl && (
-      <a href={websiteUrl} target="_blank" rel="noreferrer" className={buttonCss.mediumButton}>
+}> = ({ project, checkWebsiteLabel, checkSourceCodeLabel }) => (
+  <div className={css.ressourceButtons}>
+    {project.websiteUrl && (
+      <a
+        href={project.websiteUrl}
+        target="_blank"
+        rel="noreferrer"
+        className={clsx(buttonCss.mediumButton, css.button)}>
         {checkWebsiteLabel}
       </a>
     )}
-    {sourceCodeUrl && (
-      <a href={sourceCodeUrl} target="_blank" rel="noreferrer" className={buttonCss.mediumButton}>
+    {project.sourceCodeUrl && (
+      <a
+        href={project.sourceCodeUrl}
+        target="_blank"
+        rel="noreferrer"
+        className={clsx(buttonCss.mediumButton, css.button)}>
         {checkSourceCodeLabel}
       </a>
     )}
   </div>
 );
 
+const Technos = ({ project, isExpanded, isTransitionDone }) => {
+  const maxCardTagNumber = 3;
+  const technos = project.technos.split(',');
+  return (
+    <ul className={css.technoList}>
+      {technos.map((techno, index) => (
+        <li
+          key={techno + index}
+          style={{ transitionDelay: index >= maxCardTagNumber ? `${index * 0.1 + 0.3}s` : '0s' }}
+          className={clsx(css.technoItem, {
+            [css.technoItemVisible]: (isExpanded && isTransitionDone) || index < maxCardTagNumber
+          })}>
+          <Tag>{techno}</Tag>
+        </li>
+      ))}
+      {technos.length > maxCardTagNumber && !(isExpanded && isTransitionDone) && (
+        <li
+          className={clsx(css.technoItem, {
+            [css.technoItemVisible]: !(isExpanded && isTransitionDone)
+          })}>
+          <Tag>{`+${technos.length - maxCardTagNumber}`}</Tag>
+        </li>
+      )}
+    </ul>
+  );
+};
+
+const Challenges = ({ project, challengesLabel }) => {
+  const challenges = JSON.parse(project.challenges);
+  return (
+    <>
+      <h3 className={css.title}>{challengesLabel}</h3>
+      <ul className={css.challenges}>
+        {challenges.map((challenge, index) => (
+          <li key={index} className={css.challengeItem} style={{ animationDelay: `${index * 0.1}s`}}>{challenge}</li>
+        ))}
+      </ul>
+    </>
+  );
+};
+
 export const ProjectContent: React.FC<Props> = ({
   project,
   readMoreLabel,
   checkWebsiteLabel,
   checkSourceCodeLabel,
+  challengesLabel,
   isExpanded,
   isTransitionDone,
   setIsExpanded
@@ -60,23 +104,17 @@ export const ProjectContent: React.FC<Props> = ({
       className={clsx(css.innerContent, {
         [css.innerExpandedContent]: isExpanded && isTransitionDone
       })}>
-      <ul className={css.technoList}>
-        {project.technos.split(',').map((techno, index) => (
-          <li
-            key={techno + index}
-            className={clsx(css.technoItem, {
-              [css.technoItemVisible]: (isExpanded && isTransitionDone) || index < 3
-            })}>
-            <Tag>{techno}</Tag>
-          </li>
-        ))}
-      </ul>
+      <Technos project={project} isExpanded={isExpanded} isTransitionDone={isTransitionDone} />
       <h3 className={css.title}>{project.name}</h3>
-      {!(isExpanded && isTransitionDone) && <p
+      <p
         className={css.excerpt}
-        dangerouslySetInnerHTML={{ __html: project.excerptNode.childMarkdownRemark.html }}
-      />}
-      {isExpanded && isTransitionDone && <p dangerouslySetInnerHTML={{ __html: project.contextNode.childMarkdownRemark.html }} />}
+        dangerouslySetInnerHTML={{
+          __html:
+            isExpanded && isTransitionDone
+              ? project.contextNode.childMarkdownRemark.html
+              : project.excerptNode.childMarkdownRemark.html
+        }}
+      />
       <button
         onClick={() => setIsExpanded(true)}
         className={clsx(buttonCss.largeButton, {
@@ -84,13 +122,15 @@ export const ProjectContent: React.FC<Props> = ({
         })}>
         {readMoreLabel}
       </button>
-      {isExpanded && isTransitionDone && (
-        <RessourceButtons
-          websiteUrl={project.websiteUrl}
-          sourceCodeUrl={project.sourceCodeUrl}
-          checkWebsiteLabel={checkWebsiteLabel}
-          checkSourceCodeLabel={checkSourceCodeLabel}
-        />
+      {isExpanded && isTransitionDone && (project.websiteUrl || project.sourceCodeUrl) && (
+        <>
+          <Challenges project={project} challengesLabel={challengesLabel} />
+          <RessourceButtons
+            project={project}
+            checkWebsiteLabel={checkWebsiteLabel}
+            checkSourceCodeLabel={checkSourceCodeLabel}
+          />
+        </>
       )}
     </div>
   </div>
