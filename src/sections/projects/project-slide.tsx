@@ -1,86 +1,39 @@
 import React from 'react';
 import { SwiperSlide } from 'swiper/react';
 import { Project } from './projects.type';
-import Img from 'gatsby-image';
-import { Tag } from '../../components/tag/tag';
 import css from './projects.module.sass';
-import buttonCss from '../../components/buttons/buttons.module.sass';
 import { Modal } from '../../components/modal';
+import clsx from 'clsx';
+import { CloseIcon } from './close-icon';
+import { ProjectContent } from './project-content';
 
 type Props = {
+  project: Project;
   readMoreLabel: string;
   isCurrentSlide: boolean;
-  isTransitionDone: boolean;
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  challengesLabel: string;
+  checkSourceCodeLabel: string;
+  checkWebsiteLabel: string;
+  nextProjectLabel: string;
+  previousProjectLabel: string;
 };
 
-const transition = ['width', 'height', 'top', 'left']
-  .map((property) => `${property} .35s ease-in-out`)
-  .join(',');
-
-const zIndex = 1000;
-
-const expandedStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100vw',
-  height: '100vh',
-  opacity: 1,
-  pointerEvents: 'auto',
-  zIndex,
-  transition
-};
-
-const defaultStyle: React.CSSProperties = {
-  opacity: 0
-};
-
-const ProjectDescription: React.FC<Project & Props> = ({
-  mainImage,
-  excerptNode,
-  name,
-  technos,
-  readMoreLabel,
-  setIsExpanded
-}) => (
-  <div style={{ boxShadow: '0px 2px 10px 0px grey', borderRadius: 30 }}>
-    <Img style={{ borderRadius: '30px 30px 0 0', maxHeight: 300 }} {...mainImage} />
-    <div style={{ padding: '20px 20px 30px 20px', backgroundColor: 'white', borderRadius: '0 0 30px 30px' }}>
-    <ul className={css.technoList}>
-      {technos
-        .split(',')
-        .filter((_, index) => index < 3)
-        .map((techno, index) => (
-          <li key={techno + index} className={css.technoItem}>
-            <Tag>{techno}</Tag>
-          </li>
-        ))}
-    </ul>
-      <h3 className={css.title}>{name}</h3>
-      <p
-        className={css.excerpt}
-        dangerouslySetInnerHTML={{ __html: excerptNode.childMarkdownRemark.html }}
-      />
-      <button onClick={() => setIsExpanded(true)} className={buttonCss.largeButton}>
-        {readMoreLabel}
-      </button>
-    </div>
-  </div>
-);
+const zIndex = 1001;
 
 // eslint-disable-next-line max-lines-per-function
-export const ProjectSlide: React.FC<Project & Props> = ({
-  name,
-  excerptNode,
-  mainImage,
-  technos,
+export const ProjectSlide: React.FC<Props> = ({
+  project,
   readMoreLabel,
   isCurrentSlide,
-  isTransitionDone
+  challengesLabel,
+  checkSourceCodeLabel,
+  checkWebsiteLabel,
+  nextProjectLabel,
+  previousProjectLabel
 }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const [containerStyle, setContainerStyle] = React.useState(defaultStyle);
+  const [isTransitionDone, setIsTransitionDone] = React.useState(true);
+  const [containerStyle, setContainerStyle] = React.useState({});
   const ref = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -88,11 +41,12 @@ export const ProjectSlide: React.FC<Project & Props> = ({
       if (isExpanded) {
         requestAnimationFrame(() => {
           const { top, left, width, height } = ref.current?.getBoundingClientRect();
-          setContainerStyle({ top, left, width, height, zIndex, opacity: 1 });
+          setContainerStyle({ top, left, width, height, zIndex, opacity: 1, transition: 'none' });
+          setIsTransitionDone(false);
 
           setTimeout(() => {
             document.body.style.overflowY = 'hidden';
-            setContainerStyle(expandedStyle);
+            setContainerStyle({});
           }, 300);
         });
       } else {
@@ -111,36 +65,48 @@ export const ProjectSlide: React.FC<Project & Props> = ({
         });
       }
     }
-  }, [isExpanded, isTransitionDone]);
+  }, [isExpanded]);
 
   return (
     <SwiperSlide
       ref={ref}
-      className={css.project}
+      className={clsx(css.project, css.projectCard)}
       style={{
         transition: 'transform 0.3s ease',
         transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)'
       }}>
-      <ProjectDescription
-        name={name}
-        excerptNode={excerptNode}
-        mainImage={mainImage}
+      <ProjectContent
+        project={project}
         readMoreLabel={readMoreLabel}
-        technos={technos}
+        isTransitionDone={isTransitionDone}
+        isExpanded={false}
         setIsExpanded={setIsExpanded}
       />
       <Modal>
-        <div style={{ position: 'fixed', backgroundColor: 'white', ...containerStyle }}>
-          <button onClick={() => setIsExpanded(false)}>close</button>
-          <ProjectDescription
-            name={name}
-            excerptNode={excerptNode}
-            mainImage={mainImage}
+        <div
+          onTransitionEnd={() => setIsTransitionDone(true)}
+          className={clsx(css.project, {
+            [css.projectCard]: !isExpanded,
+            [css.expandedProject]: isExpanded
+          })}
+          style={containerStyle}>
+          <button className={css.closeButton} onClick={() => setIsExpanded(false)}><CloseIcon /></button>
+          <ProjectContent
+            project={project}
             readMoreLabel={readMoreLabel}
-            technos={technos}
+            challengesLabel={challengesLabel}
+            checkSourceCodeLabel={checkSourceCodeLabel}
+            checkWebsiteLabel={checkWebsiteLabel}
+            nextProjectLabel={nextProjectLabel}
+            previousProjectLabel={previousProjectLabel}
+            isTransitionDone={isTransitionDone}
+            isExpanded={isExpanded}
             setIsExpanded={setIsExpanded}
           />
         </div>
+        <div
+          onClick={() => setIsExpanded(false)}
+          className={clsx(css.overlay, { [css.overlayVisible]: isExpanded })}></div>
       </Modal>
     </SwiperSlide>
   );

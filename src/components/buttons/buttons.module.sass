@@ -1,20 +1,24 @@
 @import "../../theme/variables/variables"
 
+$button-border-radius: 3px
+
 .mediumButton
   @include usual-text
-  border-radius: 3px
+  border-radius: $button-border-radius
   font-weight: $bold
   background-color: $greenA100
   border: none
   font-family: $font-family
-  padding: scale(0) scale(2)
+  padding: scale(2) scale(3)
   cursor: pointer
+  text-decoration: none
+  color: $dark-body-color
 
 .largeButton
   @include usual-text
   display: block
   width: 100%
-  border-radius: 3px
+  border-radius: $button-border-radius
   font-weight: $bold
   background-color: $greenA100
   border: none

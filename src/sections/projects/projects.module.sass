@@ -36,21 +36,56 @@
       margin-bottom: scale(12)
 
 
-.project
+.projectCard
   max-width: scale(20)
 
-  .title
-    @include important-text
-    margin-bottom: scale(5)
+.expandedProject
+  width: 100vw
+  position: fixed
+  top: 0
+  left: 0
+  height: 100vh
+  opacity: 1
+  pointer-events: auto
+  z-index: 1001
+  transition: width 0.35s ease-in-out 0s, height 0.35s ease-in-out 0s, top 0.35s ease-in-out 0s, left 0.35s ease-in-out 0s
+  +desktop
+    width: scale(22)
+    left: calc((100vw - #{scale(22)}) / 2)
+    top: 10vh
+
+.overlay
+  opacity: 0
+  background-color: hsla(0, 0, 0, 0.7)
+  position: fixed
+  width: 100vw
+  height: 100vh
+  top: 0
+  left: 0
+  z-index: 1000
+  pointer-events: none
+  transition: opacity 0.1s ease-in-out 0.3s
   
-  .excerpt
-    @include usual-text
-    margin-bottom: scale(5)
+  &Visible
+    content: ''
+    opacity: 1
+    pointer-events: auto
+    cursor: pointer
 
-  .technoList
-    display: flex
-    flex-wrap: wrap
-    margin-bottom: scale(3)
+.closeButton
+  position: absolute
+  right: scale(3)
+  top: scale(3)
+  width: scale(10)
+  height: scale(10)
+  border: none
+  background-color: transparent
+  z-index: 1
+  cursor: pointer
+  transition: transform 0.1s ease-in-out 
+  +tablet
+    width: scale(12)
+    height: scale(12)
 
-    .technoItem
-      margin: 0 scale(1) scale(1) 0
+  &:hover
+    transform: scale3d(1.2, 1.2, 1)

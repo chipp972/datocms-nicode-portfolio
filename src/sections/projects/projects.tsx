@@ -82,7 +82,6 @@ export const Projects: React.FC = () => {
   const { projects } = useStaticQuery<ProjectsSectionQuery>(projectsQuery);
   const [swiperRef, setSwiperRef] = React.useState(null);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
-  const [isTransitionDone, setIsTransitionDone] = React.useState(true);
   const isMobile = swiperRef?.device.ios || swiperRef?.device.android;
 
   return (
@@ -98,8 +97,6 @@ export const Projects: React.FC = () => {
         spaceBetween={50}
         grabCursor={!isMobile}
         onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
-        onSlideChangeTransitionStart={() => setIsTransitionDone(false)}
-        onSlideChangeTransitionEnd={() => setIsTransitionDone(true)}
         onSwiper={setSwiperRef}
         navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
         pagination={{ clickable: true, el: '.swiper-pagination' }}>
@@ -107,10 +104,14 @@ export const Projects: React.FC = () => {
           {projects.projectList.map((project, index) => (
             <ProjectSlide
               key={project.id}
-              {...project}
+              project={project}
               readMoreLabel={projects.readMoreLabel}
+              challengesLabel={projects.challengesLabel}
+              checkSourceCodeLabel={projects.checkSourceCodeLabel}
+              checkWebsiteLabel={projects.checkWebsiteLabel}
+              nextProjectLabel={projects.nextProjectLabel}
+              previousProjectLabel={projects.previousProjectLabel}
               isCurrentSlide={currentSlideIndex === index}
-              isTransitionDone={isTransitionDone}
             />
           ))}
         </div>
