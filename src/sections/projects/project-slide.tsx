@@ -60,7 +60,8 @@ export const ProjectSlide: React.FC<Props> = ({
             height,
             zIndex,
             opacity: 0,
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            position: 'fixed'
           });
         });
       }
