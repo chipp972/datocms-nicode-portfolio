@@ -9,25 +9,17 @@ import { Section } from '../../components/layout';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Swiper } from 'swiper/react';
 import SwiperCore, { Navigation, A11y, Pagination } from 'swiper';
-import { Project } from './projects.type';
+import { ProjectsContext as ProjectsContextType } from './projects.type';
 import { ProjectSlide } from './project-slide';
 import clsx from 'clsx';
+import { ProjectsContext } from './projects.context';
 
 SwiperCore.use([Navigation, A11y, Pagination]);
 
 export type ProjectsSectionQuery = {
   projects: {
     id: string;
-    title: string;
-    sectionLabel: string;
-    readMoreLabel: string;
-    challengesLabel: string;
-    checkSourceCodeLabel: string;
-    checkWebsiteLabel: string;
-    nextProjectLabel: string;
-    previousProjectLabel: string;
-    projectList: Project[];
-  };
+  } & ProjectsContextType;
 };
 
 export const projectsQuery = graphql`
@@ -85,7 +77,7 @@ export const Projects: React.FC = () => {
   const isMobile = swiperRef?.device.ios || swiperRef?.device.android;
 
   return (
-    <>
+    <ProjectsContext.Provider value={projects}>
       <Section className={css.projects} id={projects.id}>
         <h2 className={css.title}>{projects.title}</h2>
       </Section>
@@ -104,13 +96,7 @@ export const Projects: React.FC = () => {
           {projects.projectList.map((project, index) => (
             <ProjectSlide
               key={project.id}
-              project={project}
-              readMoreLabel={projects.readMoreLabel}
-              challengesLabel={projects.challengesLabel}
-              checkSourceCodeLabel={projects.checkSourceCodeLabel}
-              checkWebsiteLabel={projects.checkWebsiteLabel}
-              nextProjectLabel={projects.nextProjectLabel}
-              previousProjectLabel={projects.previousProjectLabel}
+              projectIndex={index}
               isCurrentSlide={currentSlideIndex === index}
             />
           ))}
@@ -119,6 +105,6 @@ export const Projects: React.FC = () => {
         <div className={clsx(css.navigation, 'swiper-button-next')}></div>
         <div className={clsx(css.navigation, 'swiper-button-prev')}></div>
       </Swiper>
-    </>
+    </ProjectsContext.Provider>
   );
 };

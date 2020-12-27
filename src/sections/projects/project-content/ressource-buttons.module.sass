@@ -1,0 +1,18 @@
+@import "../../../theme/variables/variables"
+
+@keyframes buttonSlides
+  0%
+    opacity: 0
+    margin-left: scale(5)
+    
+  100%
+    opacity: 1
+    margin-left: 0
+
+.ressourceButtons
+  margin-top: scale(8)
+
+  .button
+    margin-right: scale(2)
+    opacity: 0
+    animation: buttonSlides 0.5s forwards

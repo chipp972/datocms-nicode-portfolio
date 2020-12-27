@@ -14,7 +14,7 @@ export type Project = {
   projectType: ProjectType;
   name: string;
   missionDuration?: number;
-  challenges: string[];
+  challenges: string;
   contextNode: MarkdownField;
   excerptNode: MarkdownField;
   mainImage: {
@@ -25,4 +25,17 @@ export type Project = {
     alt: string;
     fluid: FluidObject;
   }[];
+};
+
+export type ProjectsContext = {
+  id: string;
+  title: string;
+  sectionLabel: string;
+  readMoreLabel: string;
+  challengesLabel: string;
+  checkSourceCodeLabel: string;
+  checkWebsiteLabel: string;
+  nextProjectLabel: string;
+  previousProjectLabel: string;
+  projectList: Project[];
 };

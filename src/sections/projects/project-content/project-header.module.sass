@@ -1,0 +1,42 @@
+@import "../../../theme/variables/variables"
+
+$card-border-radius: scale(7)
+$max-image-height: 300px
+
+.projectHeader
+  position: relative
+
+  .projectImage
+    border-radius: $card-border-radius $card-border-radius 0 0
+    max-height: $max-image-height
+
+    &:after
+      content: ''
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      background-color: hsl(0, 0, 0)
+      transition: opacity 0.3s ease-in-out 0.2s
+      opacity: 0
+
+    &Expanded
+      &:after
+        opacity: 0.5
+
+  .expandedTitle
+    @include title
+    font-weight: $bold
+    color: $light-bg-color
+    position: absolute
+    bottom: scale(5)
+    left: scale(5)
+    text-transform: uppercase
+    opacity: 0
+    transition: opacity 0.15s ease-in-out 0.2s
+    +tablet
+      left: scale(8)
+
+    &Visible
+      opacity: 1
