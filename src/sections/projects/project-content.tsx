@@ -55,7 +55,7 @@ const Technos = ({ project, isExpanded, isTransitionDone }) => {
       {technos.map((techno, index) => (
         <li
           key={techno + index}
-          style={{ transitionDelay: index >= maxCardTagNumber ? `${index * 0.1 + 0.3}s` : '0s' }}
+          style={{ transitionDelay: index >= maxCardTagNumber && isExpanded ? `${index * 0.1 + 0.3}s` : '0s' }}
           className={clsx(css.technoItem, {
             [css.technoItemVisible]: (isExpanded && isTransitionDone) || index < maxCardTagNumber
           })}>
@@ -99,13 +99,23 @@ export const ProjectContent: React.FC<Props> = ({
   setIsExpanded
 }) => (
   <div className={css.projectContent}>
-    <Img className={css.projectImage} {...project.mainImage} />
+    <div style={{ position: 'relative'}}>
+      <Img className={clsx(css.projectImage, {
+        [css.projectImageExpanded]: isExpanded && isTransitionDone
+      })} {...project.mainImage}>
+      </Img>
+      <h3 className={clsx(css.expandedTitle, {
+        [css.expandedTitleVisible]: isExpanded && isTransitionDone
+      })}>{project.name}</h3>
+    </div>
     <div
       className={clsx(css.innerContent, {
         [css.innerExpandedContent]: isExpanded && isTransitionDone
       })}>
       <Technos project={project} isExpanded={isExpanded} isTransitionDone={isTransitionDone} />
-      <h3 className={css.title}>{project.name}</h3>
+      <h3 className={clsx(css.title, {
+        [css.hiddenContent]: isExpanded && isTransitionDone
+      })}>{project.name}</h3>
       <p
         className={css.excerpt}
         dangerouslySetInnerHTML={{
