@@ -1,0 +1,16 @@
+@import "../../../../theme/variables/variables"
+
+.smallContent
+  transition: opacity 0.35s ease-in-out, height 0.1s ease-in-out
+  will-change: opacity
+
+  .title
+    @include important-text
+    margin-bottom: scale(5)
+
+  .excerpt
+    @include usual-text
+    margin-bottom: scale(5)
+
+.hidden
+  height: 0

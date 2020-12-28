@@ -1,6 +1,6 @@
 import React from 'react';
 import css from './challenges.module.sass';
-import { ProjectsContext } from '../projects.context';
+import { ProjectsContext } from '../../projects.context';
 
 type Props = {
   projectIndex: number;

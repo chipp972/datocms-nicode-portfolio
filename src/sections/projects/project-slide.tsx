@@ -1,3 +1,4 @@
+/* eslint-disable fp/no-mutation, max-lines-per-function, complexity, max-statements */
 import React from 'react';
 import { SwiperSlide } from 'swiper/react';
 import css from './projects.module.sass';
@@ -5,6 +6,7 @@ import { Modal } from '../../components/modal';
 import clsx from 'clsx';
 import { CloseIcon } from './close-icon';
 import { ProjectContent } from './project-content';
+import { gsap } from 'gsap';
 
 type Props = {
   projectIndex: number;
@@ -12,72 +14,116 @@ type Props = {
 };
 
 const zIndex = 1001;
+const desktopWidth = 1000;
 
-// eslint-disable-next-line max-lines-per-function
-export const ProjectSlide: React.FC<Props> = ({
-  projectIndex,
-  isCurrentSlide
-}) => {
+export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isTransitionDone, setIsTransitionDone] = React.useState(true);
-  const [containerStyle, setContainerStyle] = React.useState({});
+  const expandAnimation = React.useRef(null);
+  const revertAnimation = React.useRef(null);
   const ref = React.useRef<HTMLDivElement>(null);
+  const modalRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (typeof document !== 'undefined') {
-      if (isExpanded) {
-        requestAnimationFrame(() => {
-          const { top, left, width, height } = ref.current?.getBoundingClientRect();
-          setContainerStyle({ top, left, width, height, zIndex, opacity: 1, transition: 'none' });
-          setIsTransitionDone(false);
+      const isDesktop = window.innerWidth >= desktopWidth;
 
-          setTimeout(() => {
-            document.body.style.overflowY = 'hidden';
-            setContainerStyle({});
-          }, 300);
-        });
-      } else {
-        document.body.style.overflowY = 'auto';
-        requestAnimationFrame(() => {
-          const { top, left, width, height } = ref.current?.getBoundingClientRect();
-          setContainerStyle({
+      if (expandAnimation.current?.isActive()) {
+        expandAnimation.current.kill();
+      }
+
+      if (revertAnimation.current?.isActive()) {
+        revertAnimation.current.kill();
+      }
+
+      if (isExpanded) {
+        const { top, left, width, height } = ref.current?.getBoundingClientRect();
+
+        expandAnimation.current = gsap
+          .timeline({
+            onStart: () => {
+              document.body.style.overflowY = 'hidden';
+              setIsTransitionDone(false);
+            },
+            onComplete: () => {
+              setIsTransitionDone(true);
+            }
+          })
+          .set(modalRef.current, {
+            xPercent: 0,
+            yPercent: 0,
             top,
             left,
             width,
             height,
             zIndex,
-            opacity: 0,
-            pointerEvents: 'none',
+            opacity: 1,
             position: 'fixed'
+          })
+          .to(modalRef.current, {
+            top,
+            left,
+            width,
+            height,
+            zIndex,
+            opacity: 1,
+            position: 'fixed'
+          })
+          .to(modalRef.current, {
+            xPercent: isDesktop ? -50 : undefined,
+            yPercent: isDesktop ? -50 : undefined,
+            top: isDesktop ? '50%' : 0,
+            left: isDesktop ? '50%' : 0,
+            width: isDesktop ? '800px' : '100vw',
+            height: 'auto',
+            zIndex,
+            opacity: 1,
+            duration: 0.35,
+            ease: 'power2.inOut'
           });
-        });
+        expandAnimation.current.play();
+      } else {
+        const { top, left, width, height } = ref.current?.getBoundingClientRect();
+
+        revertAnimation.current = gsap
+          .timeline({
+            onComplete: () => {
+              document.body.style.overflowY = 'auto';
+            }
+          })
+          .to(modalRef.current, {
+            xPercent: isDesktop ? 0 : undefined,
+            yPercent: isDesktop ? 0 : undefined,
+            top,
+            left,
+            width,
+            height,
+            ease: 'power2.inOut',
+            duration: 0.3
+          })
+          .set(modalRef.current, {
+            opacity: 0,
+            pointerEvents: 'none'
+          });
+
+        revertAnimation.current.play();
       }
     }
   }, [isExpanded]);
 
   return (
     <SwiperSlide
-      ref={ref}
       className={clsx(css.project, css.projectCard)}
       style={{
         transition: 'transform 0.3s ease',
         transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)'
       }}>
-      <ProjectContent
-        projectIndex={projectIndex}
-        isTransitionDone={isTransitionDone}
-        isExpanded={false}
-        setIsExpanded={setIsExpanded}
-      />
+      <ProjectContent ref={ref} projectIndex={projectIndex} setIsExpanded={setIsExpanded} />
       <Modal>
-        <div
-          onTransitionEnd={() => setIsTransitionDone(true)}
-          className={clsx(css.project, {
-            [css.projectCard]: !isExpanded,
-            [css.expandedProject]: isExpanded
-          })}
-          style={containerStyle}>
-          <button className={css.closeButton} onClick={() => setIsExpanded(false)}><CloseIcon /></button>
+        <div ref={modalRef}>
+          <button className={css.closeButton} onClick={() => setIsExpanded(false)}>
+            <CloseIcon />
+          </button>
           <ProjectContent
             projectIndex={projectIndex}
             isTransitionDone={isTransitionDone}

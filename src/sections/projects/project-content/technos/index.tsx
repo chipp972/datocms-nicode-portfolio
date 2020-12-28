@@ -1,21 +1,20 @@
 /* eslint-disable no-mixed-operators */
 import React from 'react';
-import { Tag } from '../../../components/tag/tag';
+import { Tag } from '../../../../components/tag/tag';
 import css from './technos.module.sass';
 import clsx from 'clsx';
-import { ProjectsContext } from '../projects.context';
+import { ProjectsContext } from '../../projects.context';
 
 type Props = {
   projectIndex: number;
   isExpanded: boolean;
-  isTransitionDone: boolean;
 };
 
 const maxCardTagNumber = 3;
 const baseTransitionDelay = 0.1;
 const transitionDelayFactor = 0.1;
 
-export const Technos: React.FC<Props> = ({ projectIndex, isExpanded, isTransitionDone }) => {
+export const Technos: React.FC<Props> = ({ projectIndex, isExpanded }) => {
   const { projectList } = React.useContext(ProjectsContext);
   const project = projectList[projectIndex];
   const technos = project.technos.split(',');
@@ -30,15 +29,15 @@ export const Technos: React.FC<Props> = ({ projectIndex, isExpanded, isTransitio
               : '0s' 
             }}
           className={clsx(css.technoItem, {
-            [css.technoItemVisible]: (isExpanded && isTransitionDone) || index < maxCardTagNumber
+            [css.technoItemVisible]: isExpanded || index < maxCardTagNumber
           })}>
           <Tag>{techno}</Tag>
         </li>
       ))}
-      {technos.length > maxCardTagNumber && !(isExpanded && isTransitionDone) && (
+      {technos.length > maxCardTagNumber && !isExpanded && (
         <li
           className={clsx(css.technoItem, {
-            [css.technoItemVisible]: !(isExpanded && isTransitionDone)
+            [css.technoItemVisible]: !isExpanded
           })}>
           <Tag>{`+${technos.length - maxCardTagNumber}`}</Tag>
         </li>

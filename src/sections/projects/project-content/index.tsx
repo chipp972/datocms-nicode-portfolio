@@ -1,76 +1,40 @@
 import React from 'react';
 import css from './project-content.module.sass';
-import buttonCss from '../../../components/buttons/buttons.module.sass';
 import clsx from 'clsx';
 import { Technos } from './technos';
 import { ProjectHeader } from './project-header';
-import { RessourceButtons } from './ressource-buttons';
-import { Challenges } from './challenges';
-import { ProjectsContext } from '../projects.context';
+import { SmallContent } from './small-content';
+import { ExpandedContent } from './expanded-content';
 
 type Props = {
   projectIndex: number;
-  isTransitionDone: boolean;
-  isExpanded: boolean;
+  isExpanded?: boolean;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isTransitionDone?: boolean;
 };
 
-// eslint-disable-next-line max-lines-per-function, complexity
-export const ProjectContent: React.FC<Props> = ({
-  projectIndex,
-  isExpanded,
-  isTransitionDone,
-  setIsExpanded
-}) => {
-  const { projectList, readMoreLabel } = React.useContext(ProjectsContext);
-  const project = projectList[projectIndex];
-
+const _ProjectContent: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
+  { projectIndex, isExpanded = false, setIsExpanded, isTransitionDone = false },
+  ref = React.createRef()
+) => {
+  console.log({ isTransitionDone });
   return (
-    <div className={css.projectContent}>
-      <ProjectHeader
-        isExpanded={isExpanded}
-        isTransitionDone={isTransitionDone}
-        projectIndex={projectIndex}
-      />
-      <div
-        className={clsx(css.innerContent, {
+    <div ref={ref} className={css.projectContent}>
+      <ProjectHeader isExpanded={isExpanded && isTransitionDone} projectIndex={projectIndex} />
+      <div className={clsx(css.innerContent, {
           [css.innerExpandedContent]: isExpanded && isTransitionDone
         })}>
-        <Technos projectIndex={projectIndex} isExpanded={isExpanded} isTransitionDone={isTransitionDone} />
-        <h3
-          className={clsx(css.title, {
-            [css.hideMe]: isExpanded && isTransitionDone
-          })}>
-          {project.name}
-        </h3>
-        <p
-          className={css.excerpt}
-          dangerouslySetInnerHTML={{
-            __html:
-              isExpanded && isTransitionDone
-                ? project.contextNode.childMarkdownRemark.html
-                : project.excerptNode.childMarkdownRemark.html
-          }}
+        <Technos projectIndex={projectIndex} isExpanded={isExpanded && isTransitionDone} />
+        <SmallContent
+          projectIndex={projectIndex}
+          isExpanded={isExpanded}
+          isTransitionDone={isTransitionDone}
+          setIsExpanded={setIsExpanded}
         />
-        <button
-          onClick={() => setIsExpanded(true)}
-          className={clsx(buttonCss.largeButton, {
-            [css.hideMe]: isExpanded && isTransitionDone
-          })}>
-          {readMoreLabel}
-        </button>
-        {/* TODO: transition challenges properly */}
-        {isExpanded && isTransitionDone && (
-          <>
-            <Challenges projectIndex={projectIndex} />
-            <RessourceButtons
-              projectIndex={projectIndex}
-              isExpanded={isExpanded}
-              isTransitionDone={isTransitionDone}
-            />
-          </>
-        )}
+        <ExpandedContent isExpanded={isExpanded && isTransitionDone} projectIndex={projectIndex} />
       </div>
     </div>
   );
 };
+
+export const ProjectContent = React.forwardRef(_ProjectContent);

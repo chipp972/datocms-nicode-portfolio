@@ -1,18 +1,5 @@
 @import "../../../theme/variables/variables"
 
-@keyframes hide
-  0%
-  
-  90%
-    opacity: 0
-    
-  100%
-    opacity: 0
-    height: 0px
-    margin: 0px
-    padding: 0px
-    
-
 $card-border-radius: scale(7)
 
 .projectContent
@@ -23,28 +10,8 @@ $card-border-radius: scale(7)
     padding: scale(5) scale(5) scale(7) scale(5)
     background-color: $bg-color
     border-radius: 0 0 $card-border-radius $card-border-radius
+    transition: all 0.3s ease-in-out 0.35s
   
   .innerExpandedContent
     +tablet
       padding: scale(9) scale(11) scale(8) scale(11)
-
-  .title
-    @include important-text
-    margin-bottom: scale(5)
-
-  .excerpt
-    @include usual-text
-    margin-bottom: scale(5)
-
-  .hiddenContent
-    transition: opacity 0.15s ease-in-out 0.1s, height 0.35s ease-in-out 0.3s
-    opacity: 0
-    height: 0px
-    margin: 0px
-    padding: 0px
-  
-  .hideMe
-    animation: hide 0.8s forwards
-
-.showContent
-  animation: hide 0.8s reverse backwards

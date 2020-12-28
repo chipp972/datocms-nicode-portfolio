@@ -1,25 +1,19 @@
 import React from 'react';
 import css from './ressource-buttons.module.sass';
-import buttonCss from '../../../components/buttons/buttons.module.sass';
+import buttonCss from '../../../../components/buttons/buttons.module.sass';
 import clsx from 'clsx';
 import { Case } from 'react-case-when';
-import { ProjectsContext } from '../projects.context';
+import { ProjectsContext } from '../../projects.context';
 
 type Props = {
   projectIndex: number;
   isExpanded: boolean;
-  isTransitionDone: boolean;
 };
 
 // eslint-disable-next-line complexity
-export const RessourceButtons: React.FC<Props> = ({
-  projectIndex,
-  isExpanded,
-  isTransitionDone
-}) => {
+export const RessourceButtons: React.FC<Props> = ({ projectIndex, isExpanded }) => {
   const { projectList, checkSourceCodeLabel, checkWebsiteLabel } = React.useContext(ProjectsContext);
   const project = projectList[projectIndex];
-  const isVisible = isExpanded && isTransitionDone;
 
   if (!project.websiteUrl && !project.sourceCodeUrl) {
     return null;
@@ -29,7 +23,7 @@ export const RessourceButtons: React.FC<Props> = ({
     <div className={css.ressourceButtons}>
       <Case when={!!project.websiteUrl}>
         <a
-          style={{ animationDelay: isVisible ? '0.4s' : '0s' }}
+          style={{ animationDelay: isExpanded ? '0.4s' : '0s' }}
           href={project.websiteUrl}
           target="_blank"
           rel="noreferrer"
@@ -39,7 +33,7 @@ export const RessourceButtons: React.FC<Props> = ({
       </Case>
       <Case when={!!project.sourceCodeUrl}>
         <a
-          style={{ animationDelay: isVisible ? '0.6s' : '0s' }}
+          style={{ animationDelay: isExpanded ? '0.6s' : '0s' }}
           href={project.sourceCodeUrl}
           target="_blank"
           rel="noreferrer"
