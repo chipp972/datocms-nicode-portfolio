@@ -42,6 +42,11 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             },
             onComplete: () => {
               setIsTransitionDone(true);
+              animationRef.current.set(modalRef.current, {
+                pointerEvents: 'auto',
+                overflowY: 'auto',
+                delay: 1.5
+              }).play();
             }
           })
           .set(modalRef.current, {
@@ -53,7 +58,9 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             height,
             zIndex,
             opacity: 1,
-            position: 'fixed'
+            position: 'fixed',
+            pointerEvents: 'none',
+            overflow: 'hidden'
           })
           .to(modalRef.current, {
             top,
@@ -70,10 +77,9 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             top: isDesktop ? '50%' : 0,
             left: isDesktop ? '50%' : 0,
             width: isDesktop ? '800px' : '100vw',
-            height: 'auto',
+            height: '90%',
             zIndex,
             opacity: 1,
-            maxHeight: '100%',
             duration: 0.35,
             ease: 'power2.inOut'
           });

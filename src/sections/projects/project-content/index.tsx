@@ -75,27 +75,21 @@ const _ProjectContent: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
         // Add the Tween at the start of the previous Tween so that they run in parallel
         }, '<')
         .fromTo(`.${gsapClassnames.description}`, {
-          opacity: 0,
-          height: 0
+          opacity: 0
         }, {
           opacity: 1,
-          height: 'auto',
           delay: 0.5
         })
         .fromTo(`.${gsapClassnames.challengesTitle}`, {
-          opacity: 0,
-          height: 0
+          opacity: 0
         }, {
-          opacity: 1,
-          height: 'auto'
+          opacity: 1
         })
         .fromTo(`.${gsapClassnames.challengesItem}`, {
           opacity: 0,
-          height: 'auto',
           translateX: 20
         }, {
           opacity: 1,
-          height: 'auto',
           translateX: 0
         })
         .fromTo(`.${gsapClassnames.ressourceButtonWebsite}`, {

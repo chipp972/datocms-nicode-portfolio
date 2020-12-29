@@ -7,6 +7,7 @@ import { Section } from '../layout';
 import { AnchorLink } from 'gatsby-plugin-anchor-links';
 import { gsap } from 'gsap';
 import { useNavMenu } from './nav.hook';
+import footerCss from '../footer/footer.module.sass';
 
 export const NavBar: React.FC = () => {
   const menu = useNavMenu();
@@ -17,7 +18,7 @@ export const NavBar: React.FC = () => {
         trigger: `.${css.navbar}`,
         start: 80,
         toggleClass: 'navbar-highlighted',
-        endTrigger: 'html',
+        endTrigger: `.${footerCss.footer}`,
         end: 'bottom top'
       }
     });
