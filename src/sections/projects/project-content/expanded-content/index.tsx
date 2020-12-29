@@ -7,27 +7,46 @@ import clsx from 'clsx';
 
 type Props = {
   projectIndex: number;
-  isExpanded: boolean;
+  className?: string;
+  descriptionClassname?: string;
+  challengesTitleClassname?: string;
+  challengesClassname?: string;
+  challengesItemClassname?: string;
+  ressourceButtonWebsite?: string;
+  ressourceButtonSourceCode?: string;
 };
 
-export const ExpandedContent: React.FC<Props> = ({ projectIndex, isExpanded }) => {
+export const ExpandedContent: React.FC<Props> = ({
+  projectIndex,
+  className,
+  descriptionClassname,
+  challengesClassname,
+  challengesTitleClassname,
+  challengesItemClassname,
+  ressourceButtonWebsite,
+  ressourceButtonSourceCode
+}) => {
   const { projectList } = React.useContext(ProjectsContext);
   const project = projectList[projectIndex];
 
   return (
-    <div className={clsx(css.expandedContent, {
-      [css.show]: isExpanded
-    })}>
+    <div className={className}>
       <p
-        className={css.description}
+        className={clsx(css.description, descriptionClassname)}
         dangerouslySetInnerHTML={{
           __html: project.contextNode.childMarkdownRemark.html
         }}
       />
-      <Challenges projectIndex={projectIndex} />
-      <RessourceButtons
+      <Challenges
+        challengesClassname={challengesClassname}
+        challengesTitleClassname={challengesTitleClassname}
+        challengesItemClassname={challengesItemClassname}
         projectIndex={projectIndex}
-        isExpanded={isExpanded}
+      />
+      <RessourceButtons
+        ressourceButtonWebsite={ressourceButtonWebsite}
+        ressourceButtonSourceCode={ressourceButtonSourceCode}
+        projectIndex={projectIndex}
       />
     </div>
   );

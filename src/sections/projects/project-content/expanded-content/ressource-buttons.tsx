@@ -7,12 +7,18 @@ import { ProjectsContext } from '../../projects.context';
 
 type Props = {
   projectIndex: number;
-  isExpanded: boolean;
+  ressourceButtonWebsite?: string;
+  ressourceButtonSourceCode?: string;
 };
 
-// eslint-disable-next-line complexity
-export const RessourceButtons: React.FC<Props> = ({ projectIndex, isExpanded }) => {
-  const { projectList, checkSourceCodeLabel, checkWebsiteLabel } = React.useContext(ProjectsContext);
+export const RessourceButtons: React.FC<Props> = ({
+  projectIndex,
+  ressourceButtonSourceCode,
+  ressourceButtonWebsite
+}) => {
+  const { projectList, checkSourceCodeLabel, checkWebsiteLabel } = React.useContext(
+    ProjectsContext
+  );
   const project = projectList[projectIndex];
 
   if (!project.websiteUrl && !project.sourceCodeUrl) {
@@ -23,21 +29,19 @@ export const RessourceButtons: React.FC<Props> = ({ projectIndex, isExpanded }) 
     <div className={css.ressourceButtons}>
       <Case when={!!project.websiteUrl}>
         <a
-          style={{ animationDelay: isExpanded ? '0.4s' : '0s' }}
           href={project.websiteUrl}
           target="_blank"
           rel="noreferrer"
-          className={clsx(buttonCss.mediumButton, css.button)}>
+          className={clsx(buttonCss.mediumButton, css.button, ressourceButtonWebsite)}>
           {checkWebsiteLabel}
         </a>
       </Case>
       <Case when={!!project.sourceCodeUrl}>
         <a
-          style={{ animationDelay: isExpanded ? '0.6s' : '0s' }}
           href={project.sourceCodeUrl}
           target="_blank"
           rel="noreferrer"
-          className={clsx(buttonCss.mediumButton, css.button)}>
+          className={clsx(buttonCss.mediumButton, css.button, ressourceButtonSourceCode)}>
           {checkSourceCodeLabel}
         </a>
       </Case>

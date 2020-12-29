@@ -19,8 +19,7 @@ const desktopWidth = 1000;
 export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isTransitionDone, setIsTransitionDone] = React.useState(true);
-  const expandAnimation = React.useRef(null);
-  const revertAnimation = React.useRef(null);
+  const animationRef = React.useRef<gsap.core.Timeline>(null);
   const ref = React.useRef<HTMLDivElement>(null);
   const modalRef = React.useRef<HTMLDivElement>(null);
 
@@ -28,18 +27,14 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
     if (typeof document !== 'undefined') {
       const isDesktop = window.innerWidth >= desktopWidth;
 
-      if (expandAnimation.current?.isActive()) {
-        expandAnimation.current.kill();
-      }
-
-      if (revertAnimation.current?.isActive()) {
-        revertAnimation.current.kill();
+      if (animationRef.current?.isActive()) {
+        animationRef.current.kill();
       }
 
       if (isExpanded) {
         const { top, left, width, height } = ref.current?.getBoundingClientRect();
 
-        expandAnimation.current = gsap
+        animationRef.current = gsap
           .timeline({
             onStart: () => {
               document.body.style.overflowY = 'hidden';
@@ -78,14 +73,16 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             height: 'auto',
             zIndex,
             opacity: 1,
+            maxHeight: '100%',
             duration: 0.35,
             ease: 'power2.inOut'
           });
-        expandAnimation.current.play();
+
+        animationRef.current.play();
       } else {
         const { top, left, width, height } = ref.current?.getBoundingClientRect();
 
-        revertAnimation.current = gsap
+        animationRef.current = gsap
           .timeline({
             onComplete: () => {
               document.body.style.overflowY = 'auto';
@@ -98,6 +95,7 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             left,
             width,
             height,
+            position: 'fixed',
             ease: 'power2.inOut',
             duration: 0.3
           })
@@ -106,7 +104,7 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             pointerEvents: 'none'
           });
 
-        revertAnimation.current.play();
+        animationRef.current.play();
       }
     }
   }, [isExpanded]);
@@ -116,7 +114,8 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
       className={clsx(css.project, css.projectCard)}
       style={{
         transition: 'transform 0.3s ease',
-        transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)'
+        transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)',
+        opacity: isCurrentSlide ? 1 : 0.9
       }}>
       <ProjectContent ref={ref} projectIndex={projectIndex} setIsExpanded={setIsExpanded} />
       <Modal>
@@ -125,6 +124,7 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             <CloseIcon />
           </button>
           <ProjectContent
+            isModalContent
             projectIndex={projectIndex}
             isTransitionDone={isTransitionDone}
             isExpanded={isExpanded}

@@ -5,25 +5,28 @@ import clsx from 'clsx';
 import { ProjectsContext } from '../../projects.context';
 
 type Props = {
+  overlayClassname: string;
+  titleClassname: string;
+  className: string;
   projectIndex: number;
-  isExpanded: boolean;
 };
 
-export const ProjectHeader: React.FC<Props> = ({ projectIndex, isExpanded }) => {
+export const ProjectHeader: React.FC<Props> = ({
+  className,
+  overlayClassname,
+  titleClassname,
+  projectIndex
+}) => {
   const { projectList } = React.useContext(ProjectsContext);
   const project = projectList[projectIndex];
   return (
-    <header className={css.projectHeader}>
+    <header className={clsx(css.projectHeader, className)}>
       <Img
-        className={clsx(css.projectImage, {
-          [css.projectImageExpanded]: isExpanded
-        })}
+        className={css.projectImage}
         {...project.mainImage}
       />
-      <h3
-        className={clsx(css.expandedTitle, {
-          [css.expandedTitleVisible]: isExpanded
-        })}>
+      <div className={clsx(overlayClassname, css.overlay)}></div>
+      <h3 className={clsx(css.expandedTitle, titleClassname)}>
         {project.name}
       </h3>
     </header>

@@ -1,25 +1,6 @@
 @import "../../../../theme/variables/variables"
 
-@keyframes show
-  0%
-    opacity: 0
-    height: 0
-    
-  100%
-    opacity: 1
-
 .description
   @include usual-text
   margin-top: scale(2)
   margin-bottom: scale(5)
-  animation: show 2s forwards
-
-.hidden
-  display: none
-
-.expandedContent
-  display: none
-
-.show
-  display: block
-  animation: show 2s forwards
