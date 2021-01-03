@@ -77,7 +77,7 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
             top: isDesktop ? '50%' : 0,
             left: isDesktop ? '50%' : 0,
             width: isDesktop ? '800px' : '100vw',
-            height: '90%',
+            height: isDesktop ? '90%' : '100vw',
             zIndex,
             opacity: 1,
             duration: 0.35,
