@@ -1,8 +1,9 @@
-import 'swiper/swiper.scss';
-import 'swiper/components/a11y/a11y.scss';
-import 'swiper/components/thumbs/thumbs.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+import 'swiper/swiper.min.css';
+import 'swiper/components/a11y/a11y.min.css';
+import 'swiper/components/thumbs/thumbs.min.css';
+import 'swiper/components/navigation/navigation.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+
 import css from './projects.module.sass';
 import React from 'react';
 import { Section } from '../../components/layout';

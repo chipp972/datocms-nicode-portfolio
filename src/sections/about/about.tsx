@@ -1,10 +1,9 @@
 import React from 'react';
 import { Section } from '../../components/layout';
-import cssVar from '../../theme/variables/js-variables.module.scss';
 import css from './about.module.sass';
-import { useSocialList, icon } from '../../components/social/use-social-list';
 import { graphql, useStaticQuery } from 'gatsby';
 import Img, { FluidObject } from 'gatsby-image';
+import { SocialIconList } from '../../components/social/social-icon-list';
 
 const query = graphql`
   query AboutSectionQuery {
@@ -94,7 +93,6 @@ type AboutSectionQuery = {
 
 // eslint-disable-next-line max-lines-per-function
 export const About: React.FC = () => {
-  const socialProfiles = useSocialList();
   const { about } = useStaticQuery<AboutSectionQuery>(query);
   return (
     <Section id={about.id} className={css.about}>
@@ -145,22 +143,7 @@ export const About: React.FC = () => {
           ))}
         </ul>
       </section>
-      <div className={css.socialIconList}>
-        {socialProfiles.map(({ profileType, label, url }) => {
-          const Icon = icon[profileType];
-          return (
-            <a
-              key={profileType}
-              href={url}
-              target="_blank"
-              rel="noreferrer"
-              className={css.socialIcon}>
-              <Icon size={cssVar.xxlSize} />
-              <span className={css.label}>{label}</span>
-            </a>
-          );
-        })}
-      </div>
+      <SocialIconList />
     </Section>
   );
 };

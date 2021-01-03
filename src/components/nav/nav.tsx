@@ -9,7 +9,8 @@ import { useNavMenu } from './nav.hook';
 import footerCss from '../footer/footer.module.sass';
 
 export const NavBar: React.FC = () => {
-  const menu = useNavMenu();
+  const { about, projects, expertises, contact } = useNavMenu();
+  const menu = { about, projects, expertises, contact };
 
   React.useEffect(() => {
     gsap.to(`nav.${css.navbar}`, {

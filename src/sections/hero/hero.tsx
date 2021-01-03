@@ -6,6 +6,7 @@ import css from './hero.module.sass';
 const query = graphql`
   query HeroQuery {
     hero: datoCmsHeroSection {
+      id
       promiseNode {
         childMarkdownRemark {
           html
@@ -25,7 +26,7 @@ export const Hero = () => {
   const promise = hero?.promiseNode?.childMarkdownRemark.html;
   const subtitle = hero?.subtitleNode?.childMarkdownRemark.html;
   return (
-    <Section className={css.hero}>
+    <Section id={hero.id} className={css.hero}>
       <p className={css.promise} dangerouslySetInnerHTML={{ __html: promise }} />
       <p className={css.subtitle} dangerouslySetInnerHTML={{ __html: subtitle }} />
     </Section>

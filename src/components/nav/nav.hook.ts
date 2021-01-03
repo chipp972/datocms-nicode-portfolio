@@ -7,6 +7,7 @@ type MenuItem = {
 };
 
 type NavQuery = {
+  hero: MenuItem;
   about: MenuItem;
   projects: MenuItem;
   expertises: MenuItem;
@@ -15,6 +16,9 @@ type NavQuery = {
 
 const query = graphql`
   query NavQuery {
+    hero: datoCmsHeroSection {
+      id
+    }
     about: datoCmsAboutSection {
       id
       sectionLabel

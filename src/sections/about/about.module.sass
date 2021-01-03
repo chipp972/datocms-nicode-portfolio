@@ -52,6 +52,9 @@
   
   .collaborations
     display: flex
+    padding-bottom: scale(6)
+    +tablet
+      padding-bottom: scale(10)
 
     .image
       +tablet
@@ -78,28 +81,3 @@
         .collaborationDescription
           @include small-text
           margin-bottom: scale(10)
-
-  .socialIconList
-    display: flex
-    flex-wrap: wrap
-    justify-content: center
-    padding-top: scale(6)
-    +tablet
-      padding-top: scale(10)
-
-    .socialIcon
-      display: inline-flex
-      flex-direction: column
-      text-decoration: none
-      align-items: center
-      height: scale(12)
-      width: scale(12)
-      margin-bottom: scale(4)
-      +tablet
-        margin-left: scale(6)
-        &:first-child
-          margin-left: 0
-
-      .label
-        color: $dark-body-color
-        margin-top: scale(2)

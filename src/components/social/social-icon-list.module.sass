@@ -1,0 +1,23 @@
+@import "../../theme/variables/variables"
+
+.socialIconList
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+
+  .socialIcon
+    display: inline-flex
+    flex-direction: column
+    text-decoration: none
+    align-items: center
+    height: scale(12)
+    width: scale(12)
+    margin-bottom: scale(4)
+    +tablet
+      margin-left: scale(6)
+      &:first-child
+        margin-left: 0
+
+    .label
+      color: $dark-body-color
+      margin-top: scale(2)

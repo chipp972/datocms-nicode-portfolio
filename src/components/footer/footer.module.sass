@@ -1,5 +1,82 @@
 @import "../../theme/variables/variables"
 
-.footer
+.wavesContainer
+  height: 200px
+  overflow: hidden
+  position: relative
+  +tablet
+    height: 200px
+  +desktop
+    height: 350px
+
+.waves
+  position: absolute
+  bottom: 0
+  left: 0
+  right: 0
   height: 100px
   background-color: $alternate-bg-color
+  transition: 5s
+  +tablet
+    height: 200px
+  +desktop
+    height: 350px
+
+.waves::before,
+.waves::after
+  content: ''
+  position: absolute
+  width: 300vw
+  height: 300vw
+  top: -67vw
+  left: 50%
+  transform: translate(-50%, -75%)
+
+.waves::before
+  border-radius: 44%
+  animation: waves 8s linear infinite
+
+.waves::after
+  border-radius: 44%
+  background: $bg-color
+  animation: waves 15s linear infinite
+
+@keyframes waves
+  0%
+    transform: translate(-50%, -75%) rotate(0deg)
+  
+  100%
+    transform: translate(-50%, -75%) rotate(360deg)
+
+.footer
+  background-color: $alternate-bg-color
+  padding-bottom: 100px
+  display: flex
+  flex-direction: column
+  +tablet
+    flex-direction: row-reverse
+
+  .footerLinks
+    display: flex
+    flex-flow: column nowrap
+    align-items: center
+    padding-bottom: scale(7)
+    +tablet
+      width: 50%
+      flex-basis: 50%
+      padding-bottom: 0
+      padding-left: scale(10)
+      align-items: flex-start
+    +desktop
+      padding-left: scale(13)
+
+    .footerLinkContainer
+      padding: scale(4) 0
+      +tablet
+        padding: 0  0 scale(7) 0
+
+    .footerLink
+      @include usual-text
+      text-decoration: none
+      font-weight: $bold
+      color: $dark-body-color
