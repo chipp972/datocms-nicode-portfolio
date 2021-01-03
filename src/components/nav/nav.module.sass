@@ -52,3 +52,73 @@ nav.bottomNav
   .menu
     justify-content: center
     align-items: center
+
+.highlighted
+  transition: 0.3s background-color ease, 0.3s box-shadow ease
+  background-color: $light-bg-color
+  box-shadow: 0 0 scale(0) 0 $shadow-color
+
+@keyframes strike
+  0%
+    left: 0
+    width: 100%
+    
+  50%
+    left: 100%
+    width: 0px
+
+  51%
+    left: 0
+    width: 0%
+
+  80%
+    left: 0
+    width: 100%
+    height: 3px
+  
+  100%
+    height: 50%
+
+@keyframes fadeStrike
+  0%
+    left: 0
+    width: 100%
+    height: 50%
+  
+  50%
+    left: 0
+    width: 100%
+    height: 3px
+    
+  100%
+    left: 100%
+    width: 0px
+    height: 3px
+
+.navbarItem
+  position: relative
+
+  &::before
+    content: ''
+    position: absolute
+    top: 50%
+    width: 100%
+    z-index: -1
+    height: 50%
+    background-color: $amber500
+    animation: fadeStrike 0.3s ease-in-out 0.2s forwards
+
+
+.currentNavbarItem
+  position: relative
+
+  &::before
+    content: ''
+    position: absolute
+    top: 50%
+    width: 100%
+    z-index: -1
+    height: 3px
+    background-color: $amber500
+    animation: strike 1s ease-in-out 0.1s forwards
+  

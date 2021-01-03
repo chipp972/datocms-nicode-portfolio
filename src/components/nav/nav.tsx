@@ -1,6 +1,5 @@
 import css from './nav.module.sass';
 import cssVar from '../../theme/variables/js-variables.module.scss';
-import './nav.sass';
 import React from 'react';
 import { Logo } from '../logo';
 import { Section } from '../layout';
@@ -17,11 +16,26 @@ export const NavBar: React.FC = () => {
       scrollTrigger: {
         trigger: `.${css.navbar}`,
         start: 80,
-        toggleClass: 'navbar-highlighted',
+        toggleClass: css.highlighted,
         endTrigger: `.${footerCss.footer}`,
         end: 'bottom top'
       }
     });
+
+    Object.values(menu).forEach(({ id }) => 
+      gsap.to(`#nav-${id}`, {
+        scrollTrigger: {
+          trigger: `#${id}`,
+          start: 'top center',
+          end: 'bottom center',
+          scrub: true,
+          toggleClass: {
+            targets: [`#nav-${id}`, `#bottomnav-${id}`],
+            className: css.currentNavbarItem
+          }
+        }
+      })
+    );
   }, []);
 
   return (
@@ -29,7 +43,7 @@ export const NavBar: React.FC = () => {
       <Logo size={cssVar.xxlSize} />
       <ul className={css.menu}>
         {Object.values(menu).map(({ id, sectionLabel }) => (
-          <li key={`nav-${id}`}>
+          <li key={`nav-${id}`} id={`nav-${id}`} className={css.navbarItem}>
             <AnchorLink to={`/#${id}`} title={sectionLabel} />
           </li>
         ))}
@@ -46,7 +60,7 @@ export const BottomNavBar: React.FC = () => {
         {Object.values(menu)
           .filter(({ isMobile }) => isMobile)
           .map(({ id, sectionLabel }) => (
-            <li key={`bottomnav-${id}`}>
+            <li key={`bottomnav-${id}`} id={`bottomnav-${id}`} className={css.navbarItem}>
               <AnchorLink to={`/#${id}`} title={sectionLabel} />
             </li>
           ))}

@@ -78,33 +78,35 @@ export const Projects: React.FC = () => {
 
   return (
     <ProjectsContext.Provider value={projects}>
-      <Section className={css.projects} id={projects.id}>
-        <h2 className={css.title}>{projects.title}</h2>
+      <Section isFullWidth id={projects.id}>
+        <Section>
+          <h2 className={css.title}>{projects.title}</h2>
+        </Section>
+        <Swiper
+          className={css.swiper}
+          slidesPerView="auto"
+          speed={500}
+          centeredSlides
+          spaceBetween={50}
+          grabCursor={!isMobile}
+          onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
+          onSwiper={setSwiperRef}
+          navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
+          pagination={{ clickable: true, el: '.swiper-pagination' }}>
+          <div className="swiper-wrapper">
+            {projects.projectList.map((project, index) => (
+              <ProjectSlide
+                key={project.id}
+                projectIndex={index}
+                isCurrentSlide={currentSlideIndex === index}
+              />
+            ))}
+          </div>
+          <div className={clsx(css.pagination, 'swiper-pagination')}></div>
+          <div className={clsx(css.navigation, 'swiper-button-next')}></div>
+          <div className={clsx(css.navigation, 'swiper-button-prev')}></div>
+        </Swiper>
       </Section>
-      <Swiper
-        className={css.swiper}
-        slidesPerView="auto"
-        speed={500}
-        centeredSlides
-        spaceBetween={50}
-        grabCursor={!isMobile}
-        onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
-        onSwiper={setSwiperRef}
-        navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
-        pagination={{ clickable: true, el: '.swiper-pagination' }}>
-        <div className="swiper-wrapper">
-          {projects.projectList.map((project, index) => (
-            <ProjectSlide
-              key={project.id}
-              projectIndex={index}
-              isCurrentSlide={currentSlideIndex === index}
-            />
-          ))}
-        </div>
-        <div className={clsx(css.pagination, 'swiper-pagination')}></div>
-        <div className={clsx(css.navigation, 'swiper-button-next')}></div>
-        <div className={clsx(css.navigation, 'swiper-button-prev')}></div>
-      </Swiper>
     </ProjectsContext.Provider>
   );
 };
