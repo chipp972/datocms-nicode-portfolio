@@ -9,22 +9,22 @@
   .title
     @include title
     font-weight: $bold
-    margin-bottom: scale(7)
-
-    +tablet
-      margin-bottom: scale(10)
 
   .description
     @include important-text
+    margin-top: scale(7)
+    margin-bottom: scale(6)
+
+    +tablet
+      margin-top: scale(10)
+      margin-bottom: scale(10)
 
   .contactMethodList
     display: flex
     flex-flow: column nowrap
     justify-content: center
-    padding-top: scale(6)
     text-align: center
     +tablet
-      padding-top: scale(10)
       flex-flow: row nowrap
       justify-content: space-around
 

@@ -5,6 +5,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { LinkedInIcon } from '../../components/social/linkedin-icon';
 import { MailIcon } from './mail-icon';
 import { PhoneIcon } from './phone-icon';
+import { InlineWidget } from 'react-calendly';
 
 const query = graphql`
   query ContactSectionQuery {
@@ -16,8 +17,13 @@ const query = graphql`
           html
         }
       }
+      rdvDescriptionNode {
+        childMarkdownRemark {
+          html
+        }
+      }
     }
-    contactMethods: allDatoCmsContactMethod(sort: {fields: position})  {
+    contactMethods: allDatoCmsContactMethod(sort: { fields: position }) {
       edges {
         node {
           id
@@ -62,6 +68,7 @@ type ContactSectionQuery = {
     id: string;
     sectionLabel: string;
     descriptionNode: MarkdownField;
+    rdvDescriptionNode: MarkdownField;
   };
   contactMethods: {
     edges: { node: ContactMethod }[];
@@ -74,21 +81,32 @@ export const Contact: React.FC = () => {
   return (
     <Section id={contact.id} className={css.contact}>
       <h2 className={css.title}>{contact.sectionLabel}</h2>
-      <p className={css.description} dangerouslySetInnerHTML={{ __html: contact.descriptionNode.childMarkdownRemark.html }} />
+      <p
+        className={css.description}
+        dangerouslySetInnerHTML={{ __html: contact.descriptionNode.childMarkdownRemark.html }}
+      />
       <div className={css.contactMethodList}>
-        {contactMethods.edges.map(({node: {id, contactType, label, detailsNode, url}}) => {
+        {contactMethods.edges.map(({ node: { id, contactType, label, detailsNode, url } }) => {
           const Icon = icon[contactType];
           return (
             <div key={id}>
-              <a className={css.contactMethod} href={url} target="_blank">
+              <a className={css.contactMethod} href={url} target="_blank" rel="noreferrer">
                 <Icon className={css.icon} />
                 <p className={css.label}>{label}</p>
               </a>
-              <p className={css.details} dangerouslySetInnerHTML={{ __html: detailsNode.childMarkdownRemark.html }} />
+              <p
+                className={css.details}
+                dangerouslySetInnerHTML={{ __html: detailsNode.childMarkdownRemark.html }}
+              />
             </div>
           );
         })}
       </div>
+      <p
+        className={css.description}
+        dangerouslySetInnerHTML={{ __html: contact.rdvDescriptionNode.childMarkdownRemark.html }}
+      />
+      <InlineWidget styles={{ height: 1000 }} url="https://calendly.com/nicode/premier-contact" />
     </Section>
   );
 };
