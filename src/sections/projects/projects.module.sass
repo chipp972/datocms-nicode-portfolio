@@ -20,7 +20,9 @@
 
 .navigationContainer
   display: flex
-  justify-content: space-around
+  justify-content: space-between
+  +tablet
+    justify-content: space-around
 
 .navigation
   display: flex
@@ -32,6 +34,8 @@
   padding: scale(3)
   margin-top: scale(5)
   @include usual-text
+  font-weight: $bold
+  width: 130px
 
 .title
   @include title
