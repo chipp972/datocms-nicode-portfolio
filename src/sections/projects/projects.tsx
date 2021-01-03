@@ -1,21 +1,19 @@
-import 'swiper/swiper.min.css';
-import 'swiper/components/a11y/a11y.min.css';
-import 'swiper/components/thumbs/thumbs.min.css';
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/swiper.scss';
+import 'swiper/components/a11y/a11y.scss';
+import 'swiper/components/pagination/pagination.scss';
 
 import css from './projects.module.sass';
 import React from 'react';
 import { Section } from '../../components/layout';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Swiper } from 'swiper/react';
-import SwiperCore, { Navigation, A11y, Pagination } from 'swiper';
+import SwiperCore, { A11y, Pagination } from 'swiper';
 import { ProjectsContext as ProjectsContextType } from './projects.type';
 import { ProjectSlide } from './project-slide';
-import clsx from 'clsx';
 import { ProjectsContext } from './projects.context';
+import { ArrowIcon, ArrowDirection } from './arrow-icon';
 
-SwiperCore.use([Navigation, A11y, Pagination]);
+SwiperCore.use([A11y, Pagination]);
 
 export type ProjectsSectionQuery = {
   projects: {
@@ -73,6 +71,7 @@ export const projectsQuery = graphql`
 
 export const Projects: React.FC = () => {
   const { projects } = useStaticQuery<ProjectsSectionQuery>(projectsQuery);
+  const paginationElRef = React.useRef<HTMLDivElement>(null);
   const [swiperRef, setSwiperRef] = React.useState(null);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const isMobile = swiperRef?.device.ios || swiperRef?.device.android;
@@ -92,8 +91,7 @@ export const Projects: React.FC = () => {
           grabCursor={!isMobile}
           onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
           onSwiper={setSwiperRef}
-          navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
-          pagination={{ clickable: true, el: '.swiper-pagination' }}>
+          pagination={{ clickable: true, el: paginationElRef.current }}>
           <div className="swiper-wrapper">
             {projects.projectList.map((project, index) => (
               <ProjectSlide
@@ -103,10 +101,18 @@ export const Projects: React.FC = () => {
               />
             ))}
           </div>
-          <div className={clsx(css.pagination, 'swiper-pagination')}></div>
-          <div className={clsx(css.navigation, 'swiper-button-next')}></div>
-          <div className={clsx(css.navigation, 'swiper-button-prev')}></div>
+          <div ref={paginationElRef} className={css.pagination}></div>
         </Swiper>
+        <div className={css.navigationContainer}>
+          <button className={css.navigation} onClick={() => swiperRef.slidePrev()}>
+            <ArrowIcon size={50} direction={ArrowDirection.left} />
+            {projects.previousProjectLabel}
+          </button>
+          <button className={css.navigation} onClick={() => swiperRef.slideNext()}>
+            <ArrowIcon size={50} direction={ArrowDirection.right} />
+            {projects.nextProjectLabel}
+          </button>
+        </div>
       </Section>
     </ProjectsContext.Provider>
   );

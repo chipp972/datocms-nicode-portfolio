@@ -1,5 +1,9 @@
 @import "../../theme/variables/variables"
 
+\:root
+  --swiper-pagination-color: #{$greenA700}
+  --swiper-theme-color: #{$greenA700}
+
 .swiper
   min-height: 530px
   +big-mobile
@@ -7,23 +11,27 @@
   +tablet
     min-height: 700px
 
-.pagination
-  margin-top: scale(1)
-  bottom: 0
-  color: $greenA700
-  +tablet
-    display: none
+  .pagination
+    margin-top: scale(1)
+    bottom: 0
+    text-align: center
+    +tablet
+      display: none
+
+.navigationContainer
+  display: flex
+  justify-content: space-around
 
 .navigation
-  display: none
-  +tablet
-    display: flex
-    color: $greenA700
-    border: 3px solid $greenA700
-    padding: 10px
-    border-radius: 50%
-    width: 50px
-    height: 50px
+  display: flex
+  flex-flow: column nowrap
+  cursor: pointer
+  border: none
+  background-color: transparent
+  align-items: center
+  padding: scale(3)
+  margin-top: scale(5)
+  @include usual-text
 
 .title
   @include title
