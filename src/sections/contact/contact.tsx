@@ -5,7 +5,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { LinkedInIcon } from '../../components/social/linkedin-icon';
 import { MailIcon } from './mail-icon';
 import { PhoneIcon } from './phone-icon';
-import { InlineWidget } from 'react-calendly';
+const CalendlyWidget = React.lazy(() => import('react-calendly').then((module) => ({ default: module.InlineWidget })));
 
 const query = graphql`
   query ContactSectionQuery {
@@ -77,6 +77,7 @@ type ContactSectionQuery = {
 
 export const Contact: React.FC = () => {
   const { contact, contactMethods } = useStaticQuery<ContactSectionQuery>(query);
+  const isSSR = typeof window === 'undefined';
 
   return (
     <Section id={contact.id} className={css.contact}>
@@ -106,7 +107,11 @@ export const Contact: React.FC = () => {
         className={css.description}
         dangerouslySetInnerHTML={{ __html: contact.rdvDescriptionNode.childMarkdownRemark.html }}
       />
-      <InlineWidget styles={{ height: 1000 }} url="https://calendly.com/nicode/premier-contact" />
+      {!isSSR && (
+        <React.Suspense fallback={<div>Chargement du calendrier...</div>}>
+          <CalendlyWidget styles={{ height: 1000 }} url="https://calendly.com/nicode/premier-contact" />
+        </React.Suspense>
+      )}
     </Section>
   );
 };
