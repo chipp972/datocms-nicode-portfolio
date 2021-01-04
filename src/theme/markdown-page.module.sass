@@ -1,0 +1,25 @@
+@import "./variables/variables"
+
+.markdown
+  padding-top: scale(8)
+  +tablet
+    padding-top: scale(15)
+
+  h1
+    @include title
+    font-weight: $bold
+    padding-bottom: scale(8)
+    +tablet
+      padding-bottom: scale(10)
+
+  h2
+    @include subtitle
+    padding-bottom: scale(5)
+    +tablet
+      padding-bottom: scale(8)
+  
+  p
+    @include usual-text
+    padding-bottom: scale(8)
+    +tablet
+      padding-bottom: scale(10)

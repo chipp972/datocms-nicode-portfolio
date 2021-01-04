@@ -8,11 +8,30 @@ import { gsap } from 'gsap';
 import { useNavMenu } from './nav.hook';
 import footerCss from '../footer/footer.module.sass';
 
-export const NavBar: React.FC = () => {
+type Props = {
+  path: string;
+};
+
+export const NavBar: React.FC<Props> = ({ path }) => {
   const { about, projects, expertises, contact } = useNavMenu();
   const menu = { about, projects, expertises, contact };
 
   React.useEffect(() => {
+    path === '/' && Object.values(menu).forEach(({ id }) =>
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: `#${id}`,
+            start: 'top center',
+            end: 'bottom center',
+            scrub: true,
+            toggleClass: {
+              targets: [`#nav-${id}`, `#bottomnav-${id}`],
+              className: css.currentNavbarItem
+            }
+          }
+        })
+      );
+
     gsap.to(`nav.${css.navbar}`, {
       scrollTrigger: {
         trigger: `.${css.navbar}`,
@@ -22,21 +41,6 @@ export const NavBar: React.FC = () => {
         end: 'bottom top'
       }
     });
-
-    Object.values(menu).forEach(({ id }) => 
-      gsap.to(`#nav-${id}`, {
-        scrollTrigger: {
-          trigger: `#${id}`,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: true,
-          toggleClass: {
-            targets: [`#nav-${id}`, `#bottomnav-${id}`],
-            className: css.currentNavbarItem
-          }
-        }
-      })
-    );
   }, []);
 
   return (

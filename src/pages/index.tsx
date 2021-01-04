@@ -15,8 +15,12 @@ gsapSetup();
 
 typeof window !== 'undefined' && smoothscroll.polyfill();
 
-const IndexPage = () => (
-  <Layout>
+type Props = {
+  path: string;
+};
+
+const IndexPage: React.FC<Props> = ({ path }) => (
+  <Layout path={path}>
     <Hero />
     <SectionTransition color={cssVar.alternateBgColor} />
     <About />

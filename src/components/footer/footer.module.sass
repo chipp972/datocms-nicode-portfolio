@@ -74,9 +74,16 @@
       padding: scale(4) 0
       +tablet
         padding: 0  0 scale(7) 0
+      &:focus-visible
+        outline: auto
 
     .footerLink
       @include usual-text
       text-decoration: none
+      background-color: transparent
+      border: none
+      cursor: pointer
       font-weight: $bold
       color: $dark-body-color
+      padding: 0
+      outline: none

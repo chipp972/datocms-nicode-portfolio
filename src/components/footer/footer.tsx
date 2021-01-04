@@ -2,30 +2,31 @@ import React from 'react';
 import css from './footer.module.sass';
 import { Section } from '../layout/section';
 import { SocialIconList } from '../social/social-icon-list';
-import { useNavMenu } from '../nav/nav.hook';
-import { AnchorLink } from 'gatsby-plugin-anchor-links';
+import { Link } from 'gatsby';
 
-export const Footer: React.FC = () => {
-  const { hero } = useNavMenu();
-  return (
-    <>
-      <div className={css.wavesContainer}>
-        <div className={css.waves}></div>
-      </div>
-      <Section component="footer" className={css.footer}>
-        <ul className={css.footerLinks}>
-          <li className={css.footerLinkContainer}>
-            <AnchorLink className={css.footerLink} to={`/#${hero.id}`} title="Retour en haut de page" />
-          </li>
-          <li className={css.footerLinkContainer}>
-            <AnchorLink className={css.footerLink} to={`/#${hero.id}`} title="Mentions légales" />
-          </li>
-          <li className={css.footerLinkContainer}>
-            <AnchorLink className={css.footerLink} to={`/#${hero.id}`} title="Credits" />
-          </li>
-        </ul>
-        <SocialIconList />
-      </Section>
-    </>
-  );
-};
+export const Footer: React.FC = () => (
+  <>
+    <div className={css.wavesContainer}>
+      <div className={css.waves}></div>
+    </div>
+    <Section component="footer" className={css.footer}>
+      <ul className={css.footerLinks}>
+        <li className={css.footerLinkContainer}>
+          {typeof document !== 'undefined' &&
+            <button className={css.footerLink} onClick={() => window.scrollTo({
+              behavior: 'smooth',
+              top: 0
+            })}>Retour en haut de page</button>
+          }
+        </li>
+        <li className={css.footerLinkContainer}>
+          <Link className={css.footerLink} to="/terms">Mentions légales</Link>
+        </li>
+        <li className={css.footerLinkContainer}>
+          <Link className={css.footerLink} to="/credits">Credits</Link>
+        </li>
+      </ul>
+      <SocialIconList />
+    </Section>
+  </>
+);

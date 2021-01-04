@@ -59,24 +59,18 @@ nav.bottomNav
   box-shadow: 0 0 scale(0) 0 $shadow-color
 
 @keyframes strike
-  0%
-    left: 0
-    width: 100%
-    
-  50%
-    left: 100%
-    width: 0px
-
-  51%
+  1%
     left: 0
     width: 0%
 
-  80%
+  50%
     left: 0
     width: 100%
     height: 3px
   
   100%
+    left: 0
+    width: 100%
     height: 50%
 
 @keyframes fadeStrike
@@ -102,7 +96,8 @@ nav.bottomNav
     content: ''
     position: absolute
     top: 50%
-    width: 100%
+    left: 0px
+    width: 0%
     z-index: -1
     height: 50%
     background-color: $amber500
@@ -116,9 +111,9 @@ nav.bottomNav
     content: ''
     position: absolute
     top: 50%
-    width: 100%
+    width: 0%
     z-index: -1
     height: 3px
     background-color: $amber500
-    animation: strike 1s ease-in-out 0.1s forwards
+    animation: strike 0.35s ease-in-out 0.1s forwards
   

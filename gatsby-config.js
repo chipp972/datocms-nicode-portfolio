@@ -20,19 +20,10 @@ module.exports = {
         background_color: '#ffffff',
         theme_color: '#92CAB5',
         display: 'standalone',
-        icons: [
-          {
-            src: 'static/img/favicon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: 'static/img/maskable_icon.png',
-            sizes: '196x196',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
+        icon: 'static/img/favicon-512x512.png',
+        icon_options: {
+          purpose: 'any maskable'
+        }
       }
     },
     'gatsby-plugin-offline',

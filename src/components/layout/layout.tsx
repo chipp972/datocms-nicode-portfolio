@@ -35,7 +35,11 @@ const layoutQuery = graphql`
   }
 `;
 
-export const Layout: React.FC = ({ children }) => {
+type Props = {
+  path: string;
+};
+
+export const Layout: React.FC<Props> = ({ path, children }) => {
   const data = useStaticQuery(layoutQuery);
   return (
     <>
@@ -44,7 +48,7 @@ export const Layout: React.FC = ({ children }) => {
           favicon={data.datoCmsSite.faviconMetaTags}
           seo={data.datoCmsHome.seoMetaTags}
         />
-        <NavBar />
+        <NavBar path={path} />
         <main className={css.mainContainer}>
           {children}
         </main>
