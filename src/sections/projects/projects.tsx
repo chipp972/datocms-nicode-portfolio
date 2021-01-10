@@ -1,20 +1,18 @@
 /* eslint-disable max-lines-per-function */
 import 'swiper/swiper.scss';
-import 'swiper/components/a11y/a11y.scss';
-import 'swiper/components/pagination/pagination.scss';
 
 import css from './projects.module.sass';
 import React from 'react';
 import { Section } from '../../components/layout';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { A11y, Pagination, Keyboard } from 'swiper';
+import SwiperCore, { Keyboard } from 'swiper';
 import { ProjectsContext as ProjectsContextType } from './projects.type';
 import { ProjectSlide } from './project-slide';
 import { ProjectsContext } from './projects.context';
 import { ArrowIcon, ArrowDirection } from './arrow-icon';
 
-SwiperCore.use([A11y, Pagination, Keyboard]);
+SwiperCore.use([Keyboard]);
 
 export type ProjectsSectionQuery = {
   projects: {
@@ -72,7 +70,6 @@ export const projectsQuery = graphql`
 
 export const Projects: React.FC = () => {
   const { projects } = useStaticQuery<ProjectsSectionQuery>(projectsQuery);
-  const paginationElRef = React.useRef<HTMLDivElement>(null);
   const [swiperRef, setSwiperRef] = React.useState(null);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
 
@@ -89,7 +86,6 @@ export const Projects: React.FC = () => {
           centeredSlides
           onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
           onSwiper={setSwiperRef}
-          pagination={{ clickable: true, el: paginationElRef.current }}
           breakpoints={{
             320: {
               slidesPerView: 1,
@@ -131,7 +127,6 @@ export const Projects: React.FC = () => {
               </SwiperSlide>
             );
           })}
-          <div ref={paginationElRef} className={css.pagination}></div>
         </Swiper>
         <div className={css.navigationContainer}>
           <button className={css.navigation} onClick={() => swiperRef.slidePrev()}>
