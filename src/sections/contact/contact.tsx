@@ -5,7 +5,6 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { LinkedInIcon } from '../../components/social/linkedin-icon';
 import { MailIcon } from './mail-icon';
 import { PhoneIcon } from './phone-icon';
-const CalendlyWidget = React.lazy(() => import('react-calendly').then((module) => ({ default: module.InlineWidget })));
 
 const query = graphql`
   query ContactSectionQuery {
@@ -78,6 +77,8 @@ type ContactSectionQuery = {
 export const Contact: React.FC = () => {
   const { contact, contactMethods } = useStaticQuery<ContactSectionQuery>(query);
   const isSSR = typeof window === 'undefined';
+  const CalendlyWidget = React.lazy(() => import('react-calendly')
+    .then((module) => ({ default: module.InlineWidget })));
 
   return (
     <Section id={contact.id} className={css.contact}>

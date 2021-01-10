@@ -24,7 +24,7 @@ export const Challenges: React.FC<Props> = ({
 
   return (
     <>
-      <h3 className={clsx(css.title, challengesTitleClassname)}>{challengesLabel}</h3>
+      <h4 className={clsx(css.title, challengesTitleClassname)}>{challengesLabel}</h4>
       <ul className={clsx(css.challenges, challengesClassname)}>
         {challenges.map((challenge, index) => (
           <li

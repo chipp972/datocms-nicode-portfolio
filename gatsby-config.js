@@ -39,6 +39,12 @@ module.exports = {
       options: { id: 'dialog' }
     },
     'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-plugin-html-attributes',
+      options: {
+        lang: 'fr'
+      }
+    },
     'gatsby-plugin-sass',
     {
       resolve: 'gatsby-plugin-react-svg',

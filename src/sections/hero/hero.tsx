@@ -7,11 +7,7 @@ const query = graphql`
   query HeroQuery {
     hero: datoCmsHeroSection {
       id
-      promiseNode {
-        childMarkdownRemark {
-          html
-        }
-      }
+      promise
       subtitleNode {
         childMarkdownRemark {
           html
@@ -23,11 +19,11 @@ const query = graphql`
 
 export const Hero = () => {
   const { hero } = useStaticQuery(query);
-  const promise = hero?.promiseNode?.childMarkdownRemark.html;
+  const promise = hero?.promise;
   const subtitle = hero?.subtitleNode?.childMarkdownRemark.html;
   return (
     <Section id={hero.id} className={css.hero}>
-      <p className={css.promise} dangerouslySetInnerHTML={{ __html: promise }} />
+      <h1 className={css.promise}>{promise}</h1>
       <p className={css.subtitle} dangerouslySetInnerHTML={{ __html: subtitle }} />
     </Section>
   );
