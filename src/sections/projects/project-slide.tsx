@@ -1,6 +1,5 @@
 /* eslint-disable fp/no-mutation, max-lines-per-function, complexity, max-statements */
 import React from 'react';
-import { SwiperSlide } from 'swiper/react';
 import css from './projects.module.sass';
 import { Modal } from '../../components/modal';
 import clsx from 'clsx';
@@ -10,13 +9,13 @@ import { gsap } from 'gsap';
 
 type Props = {
   projectIndex: number;
-  isCurrentSlide: boolean;
 };
 
 const zIndex = 1001;
 const desktopWidth = 1000;
+const wideScreenWidth = 1600;
 
-export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) => {
+export const ProjectSlide: React.FC<Props> = ({ projectIndex }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isTransitionDone, setIsTransitionDone] = React.useState(true);
   const animationRef = React.useRef<gsap.core.Timeline>(null);
@@ -26,6 +25,7 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
   React.useEffect(() => {
     if (typeof document !== 'undefined') {
       const isDesktop = window.innerWidth >= desktopWidth;
+      const isWideScreen = window.innerWidth >= wideScreenWidth;
 
       if (animationRef.current?.isActive()) {
         animationRef.current.kill();
@@ -73,11 +73,11 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
           })
           .to(modalRef.current, {
             xPercent: isDesktop ? -50 : undefined,
-            yPercent: isDesktop ? -50 : undefined,
-            top: isDesktop ? '50%' : 0,
+            yPercent: isDesktop && !isWideScreen ? -50 : undefined,
+            top: isDesktop && !isWideScreen ? '50%' : 0,
             left: isDesktop ? '50%' : 0,
             width: isDesktop ? '800px' : '100vw',
-            height: isDesktop ? '90%' : '100vh',
+            height: isDesktop && !isWideScreen ? '90%' : '100vh',
             zIndex,
             opacity: 1,
             duration: 0.35,
@@ -116,13 +116,7 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
   }, [isExpanded]);
 
   return (
-    <SwiperSlide
-      className={clsx(css.project, css.projectCard)}
-      style={{
-        transition: 'transform 0.3s ease',
-        transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)',
-        opacity: isCurrentSlide ? 1 : 0.9
-      }}>
+    <>
       <ProjectContent ref={ref} projectIndex={projectIndex} setIsExpanded={setIsExpanded} />
       <Modal>
         <div ref={modalRef}>
@@ -141,6 +135,6 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, isCurrentSlide }) 
           onClick={() => setIsExpanded(false)}
           className={clsx(css.overlay, { [css.overlayVisible]: isExpanded })}></div>
       </Modal>
-    </SwiperSlide>
+    </>
   );
 };

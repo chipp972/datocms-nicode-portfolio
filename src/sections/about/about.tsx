@@ -137,7 +137,7 @@ export const About: React.FC = () => {
           {about.collaborations.map(({ title, description, image }) => (
             <li className={css.collaborationListItem} key={title}>
               <Img className={css.collaborationImage} fluid={image.fluid} alt={image.alt} />
-              <h4 className={css.collaborationTitle}>{title}</h4>
+              <p className={css.collaborationTitle}>{title}</p>
               <p className={css.collaborationDescription}>{description}</p>
             </li>
           ))}
