@@ -74,11 +74,15 @@ type ContactSectionQuery = {
   };
 };
 
+// Delay the Calendly import to improve performance by loading less javascript files
+const calendlyDelay = 1000;
+
 export const Contact: React.FC = () => {
   const { contact, contactMethods } = useStaticQuery<ContactSectionQuery>(query);
   const isSSR = typeof window === 'undefined';
-  const CalendlyWidget = React.lazy(() => import('react-calendly')
-    .then((module) => ({ default: module.InlineWidget })));
+  const CalendlyWidget = React.lazy(() => new Promise<typeof import('react-calendly')>((resolve) => {
+    setTimeout(() => resolve(import('react-calendly')), calendlyDelay);
+  }).then((module) => ({ default: module.InlineWidget })));
 
   return (
     <Section id={contact.id} className={css.contact}>

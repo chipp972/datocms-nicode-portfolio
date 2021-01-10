@@ -7,7 +7,8 @@ const description = 'Développeur web freelance spécialisé en expérience clie
 module.exports = {
   siteMetadata: {
     title: `${name} - Développeur web freelance`,
-    description
+    description,
+    siteUrl: 'https://nicode.fr'
   },
   plugins: [
     {
@@ -45,6 +46,8 @@ module.exports = {
         lang: 'fr'
       }
     },
+    'gatsby-plugin-sitemap',
+    'gatsby-plugin-robots-txt',
     'gatsby-plugin-sass',
     {
       resolve: 'gatsby-plugin-react-svg',
