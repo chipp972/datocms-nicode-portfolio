@@ -71,19 +71,23 @@
       padding-left: scale(13)
 
     .footerLinkContainer
-      padding: scale(4) 0
+      margin: scale(4) 0
       +tablet
-        padding: 0  0 scale(7) 0
+        margin: 0 0 scale(7) 0
       &:focus-visible
         outline: auto
 
     .footerLink
       @include usual-text
+      font-family: $font-family
       text-decoration: none
       background-color: transparent
       border: none
       cursor: pointer
       font-weight: $bold
       color: $dark-body-color
-      padding: 0
+      padding: scale(2)
       outline: none
+
+      &:hover
+
