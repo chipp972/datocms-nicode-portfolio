@@ -58,7 +58,7 @@
       .label
         @include usual-text
         color: $dark-body-color
-        margin-top: scale(1)
+        margin-top: scale(5)
 
 
   .mailIcon
@@ -90,3 +90,14 @@
         fill: #fff
       .phoneIconBg
         fill: #2bb140
+
+.fallback
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+  &CalendarText
+    @include usual-text
+    display: block
+    text-align: center

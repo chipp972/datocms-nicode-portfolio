@@ -14,6 +14,8 @@ type Props = {
 const zIndex = 1001;
 const desktopWidth = 1000;
 const wideScreenWidth = 1600;
+const xDesktopPosition = -50;
+const yDesktopPosition = -50;
 
 export const ProjectSlide: React.FC<Props> = ({ projectIndex }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -72,8 +74,8 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex }) => {
             position: 'fixed'
           })
           .to(modalRef.current, {
-            xPercent: isDesktop ? -50 : undefined,
-            yPercent: isDesktop && !isWideScreen ? -50 : undefined,
+            xPercent: isDesktop ? xDesktopPosition : undefined,
+            yPercent: isDesktop && !isWideScreen ? yDesktopPosition : undefined,
             top: isDesktop && !isWideScreen ? '50%' : 0,
             left: isDesktop ? '50%' : 0,
             width: isDesktop ? '800px' : '100vw',

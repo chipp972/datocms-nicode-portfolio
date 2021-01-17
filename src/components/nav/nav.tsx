@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const NavBar: React.FC<Props> = ({ path }) => {
-  const { about, projects, expertises, contact } = useNavMenu();
+  const { hero, about, projects, expertises, contact } = useNavMenu();
   const menu = { about, projects, expertises, contact };
 
   React.useEffect(() => {
@@ -45,7 +45,9 @@ export const NavBar: React.FC<Props> = ({ path }) => {
 
   return (
     <Section component="nav" className={css.navbar}>
-      <Logo size={cssVar.xxlSize} />
+      <AnchorLink to={`/#${hero.id}`} title="Home">
+        <Logo size={cssVar.xxlSize} />
+      </AnchorLink>
       <ul className={css.menu}>
         {Object.values(menu).map(({ id, sectionLabel }) => (
           <li key={`nav-${id}`} id={`nav-${id}`} className={css.navbarItem}>

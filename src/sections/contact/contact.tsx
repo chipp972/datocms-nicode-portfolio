@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import React from 'react';
 import css from './contact.module.sass';
 import { Section } from '../../components/layout';
@@ -5,6 +6,8 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { LinkedInIcon } from '../../components/social/linkedin-icon';
 import { MailIcon } from './mail-icon';
 import { PhoneIcon } from './phone-icon';
+import { gsap } from 'gsap';
+import { Loader } from '../../components/loader/loader';
 
 const query = graphql`
   query ContactSectionQuery {
@@ -21,6 +24,8 @@ const query = graphql`
           html
         }
       }
+      calendlyUrl
+      fallbackText
     }
     contactMethods: allDatoCmsContactMethod(sort: { fields: position }) {
       edges {
@@ -68,22 +73,49 @@ type ContactSectionQuery = {
     sectionLabel: string;
     descriptionNode: MarkdownField;
     rdvDescriptionNode: MarkdownField;
+    calendlyUrl: string;
+    fallbackText: string;
   };
   contactMethods: {
     edges: { node: ContactMethod }[];
   };
 };
 
-// Delay the Calendly import to improve performance by loading less javascript files
-const calendlyDelay = 5000;
+const getContactMethodId = (id: string) => `contact-method-${id}`;
 
-const CalendlyWidget = React.lazy(() => new Promise<typeof import('react-calendly')>((resolve) => {
-  setTimeout(() => resolve(import('react-calendly')), calendlyDelay);
-}).then((module) => ({ default: module.InlineWidget })));
+const CalendlyWidget = React.lazy(() => import('react-calendly')
+  .then((module) => ({ default: module.InlineWidget })));
 
 export const Contact: React.FC = () => {
   const { contact, contactMethods } = useStaticQuery<ContactSectionQuery>(query);
+  const [isVisible, setIsVisible] = React.useState(false);
   const isSSR = typeof window === 'undefined';
+
+  React.useEffect(() => {
+    const animationTimeline = gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: `#${contact.id}`,
+          start: 'top center',
+          end: 'bottom bottom'
+        },
+        onStart: () => {
+          setIsVisible(true);
+        }
+      });
+
+    contactMethods.edges.forEach(({ node: { id } }) => {
+      animationTimeline.fromTo(`#${getContactMethodId(id)}`, {
+        opacity: 0,
+        yPercent: -20
+      }, {
+        opacity: 1,
+        yPercent: 0,
+        ease: 'power2.inOut',
+        duration: 0.5
+      });
+    });
+  }, []);
 
   return (
     <Section id={contact.id} className={css.contact}>
@@ -96,7 +128,7 @@ export const Contact: React.FC = () => {
         {contactMethods.edges.map(({ node: { id, contactType, label, detailsNode, url } }) => {
           const Icon = icon[contactType];
           return (
-            <div key={id}>
+            <div id={getContactMethodId(id)} key={id}>
               <a className={css.contactMethod} href={url} target="_blank" rel="noreferrer">
                 <Icon className={css.icon} />
                 <p className={css.label}>{label}</p>
@@ -113,9 +145,14 @@ export const Contact: React.FC = () => {
         className={css.description}
         dangerouslySetInnerHTML={{ __html: contact.rdvDescriptionNode.childMarkdownRemark.html }}
       />
-      {!isSSR && (
-        <React.Suspense fallback={<div>Chargement du calendrier...</div>}>
-          <CalendlyWidget styles={{ height: 1000 }} url="https://calendly.com/nicode/premier-contact" />
+      {!isSSR && isVisible && (
+        <React.Suspense fallback={
+          <div className={css.fallback}>
+            <Loader style={{ marginBottom: 10 }} />
+            <div className={css.fallbackCalendarText}>{contact.fallbackText}</div>
+          </div>
+        }>
+          <CalendlyWidget styles={{ height: 1000 }} url={contact.calendlyUrl} />
         </React.Suspense>
       )}
     </Section>
