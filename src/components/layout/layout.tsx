@@ -17,12 +17,6 @@ const layoutQuery = graphql`
       seoMetaTags {
         ...GatsbyDatoCmsSeoMetaTags
       }
-      introTextNode {
-        childMarkdownRemark {
-          html
-        }
-      }
-      copyright
     }
     allDatoCmsSocialProfile(sort: { fields: [position], order: ASC }) {
       edges {
