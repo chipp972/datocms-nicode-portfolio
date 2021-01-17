@@ -83,6 +83,13 @@ type ContactSectionQuery = {
 
 const getContactMethodId = (id: string) => `contact-method-${id}`;
 
+const CalendarFallback: React.FC<{ fallbackText: string }> = ({ fallbackText }) => (
+  <div className={css.fallback}>
+    <Loader style={{ marginBottom: 10 }} />
+    <div className={css.fallbackCalendarText}>{fallbackText}</div>
+  </div>
+);
+
 const CalendlyWidget = React.lazy(() => import('react-calendly')
   .then((module) => ({ default: module.InlineWidget })));
 
@@ -99,7 +106,7 @@ export const Contact: React.FC = () => {
           start: 'top center',
           end: 'bottom bottom'
         },
-        onStart: () => {
+        onComplete: () => {
           setIsVisible(true);
         }
       });
@@ -145,13 +152,9 @@ export const Contact: React.FC = () => {
         className={css.description}
         dangerouslySetInnerHTML={{ __html: contact.rdvDescriptionNode.childMarkdownRemark.html }}
       />
+      {!isVisible && <CalendarFallback fallbackText={contact.fallbackText} />}
       {!isSSR && isVisible && (
-        <React.Suspense fallback={
-          <div className={css.fallback}>
-            <Loader style={{ marginBottom: 10 }} />
-            <div className={css.fallbackCalendarText}>{contact.fallbackText}</div>
-          </div>
-        }>
+        <React.Suspense fallback={<CalendarFallback fallbackText={contact.fallbackText} />}>
           <CalendlyWidget styles={{ height: 1000 }} url={contact.calendlyUrl} />
         </React.Suspense>
       )}
