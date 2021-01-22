@@ -10,7 +10,6 @@ type NavQuery = {
   hero: MenuItem;
   about: MenuItem;
   projects: MenuItem;
-  expertises: MenuItem;
   contact: MenuItem;
 };
 
@@ -25,11 +24,6 @@ const query = graphql`
       isMobile
     }
     projects: datoCmsProjectsSection {
-      id
-      sectionLabel
-      isMobile
-    }
-    expertises: datoCmsExpertisesSection {
       id
       sectionLabel
       isMobile

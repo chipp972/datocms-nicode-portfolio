@@ -75,68 +75,70 @@ export const Projects: React.FC = () => {
 
   return (
     <ProjectsContext.Provider value={projects}>
-      <Section isFullWidth id={projects.id}>
+      <Section className={css.projectsSection} isFullWidth id={projects.id}>
         <Section>
           <h2 className={css.title}>{projects.title}</h2>
         </Section>
-        <Swiper
-          className={css.swiper}
-          autoHeight
-          speed={500}
-          centeredSlides
-          onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
-          onSwiper={setSwiperRef}
-          breakpoints={{
-            320: {
-              slidesPerView: 1,
-              spaceBetween: 10
-            },
-            500: {
-              slidesPerView: 2
-            },
-            1000: {
-              slidesPerView: 2,
-              spaceBetween: 50,
-              grabCursor: true,
-              keyboard: {
-                enabled: true,
-                onlyInViewport: true
+        <div className={css.swiperContainer}>
+          <Swiper
+            className={css.swiper}
+            autoHeight
+            speed={500}
+            centeredSlides
+            onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
+            onSwiper={setSwiperRef}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 10
+              },
+              500: {
+                slidesPerView: 2
+              },
+              1000: {
+                slidesPerView: 2,
+                spaceBetween: 50,
+                grabCursor: true,
+                keyboard: {
+                  enabled: true,
+                  onlyInViewport: true
+                }
+              },
+              1500: {
+                slidesPerView: 3,
+                spaceBetween: 50,
+                grabCursor: true,
+                keyboard: {
+                  enabled: true,
+                  onlyInViewport: true
+                }
               }
-            },
-            1500: {
-              slidesPerView: 3,
-              spaceBetween: 50,
-              grabCursor: true,
-              keyboard: {
-                enabled: true,
-                onlyInViewport: true
-              }
-            }
-          }}>
-          {projects.projectList.map((project, index) => {
-            const isCurrentSlide = currentSlideIndex === index;
-            return (
-              <SwiperSlide
-                key={project.id}
-                style={{
-                  transition: 'transform 0.3s ease',
-                  transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)',
-                  opacity: isCurrentSlide ? 1 : 0.6
-                }}>
-                <ProjectSlide projectIndex={index} />
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-        <div className={css.navigationContainer}>
-          <button className={css.navigation} onClick={() => swiperRef.slidePrev()}>
-            <ArrowIcon size={50} direction={ArrowDirection.left} />
-            {projects.previousProjectLabel}
-          </button>
-          <button className={css.navigation} onClick={() => swiperRef.slideNext()}>
-            <ArrowIcon size={50} direction={ArrowDirection.right} />
-            {projects.nextProjectLabel}
-          </button>
+            }}>
+            {projects.projectList.map((project, index) => {
+              const isCurrentSlide = currentSlideIndex === index;
+              return (
+                <SwiperSlide
+                  key={project.id}
+                  style={{
+                    transition: 'transform 0.3s ease',
+                    transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)',
+                    opacity: isCurrentSlide ? 1 : 0.6
+                  }}>
+                  <ProjectSlide projectIndex={index} />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+          <div className={css.navigationContainer}>
+            <button className={css.navigation} onClick={() => swiperRef.slidePrev()}>
+              <ArrowIcon size={50} direction={ArrowDirection.left} />
+              {projects.previousProjectLabel}
+            </button>
+            <button className={css.navigation} onClick={() => swiperRef.slideNext()}>
+              <ArrowIcon size={50} direction={ArrowDirection.right} />
+              {projects.nextProjectLabel}
+            </button>
+          </div>
         </div>
       </Section>
     </ProjectsContext.Provider>

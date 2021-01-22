@@ -4,6 +4,12 @@
   --swiper-pagination-color: #{$greenA700}
   --swiper-theme-color: #{$greenA700}
 
+.projectsSection
+  margin-bottom: scale(15)
+
+.swiperContainer
+  position: relative
+
 .swiper
   min-height: 530px
   +big-mobile
@@ -15,6 +21,12 @@
   display: flex
   justify-content: space-between
   +tablet
+    position: absolute
+    top: 70%
+    z-index: 1
+    width: 100%
+    justify-content: space-between
+  +widescreen
     justify-content: space-around
 
 .navigation

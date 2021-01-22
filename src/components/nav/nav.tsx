@@ -5,6 +5,7 @@ import { Logo } from '../logo';
 import { Section } from '../layout';
 import { AnchorLink } from 'gatsby-plugin-anchor-links';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useNavMenu } from './nav.hook';
 import footerCss from '../footer/footer.module.sass';
 
@@ -13,8 +14,8 @@ type Props = {
 };
 
 export const NavBar: React.FC<Props> = ({ path }) => {
-  const { hero, about, projects, expertises, contact } = useNavMenu();
-  const menu = { about, projects, expertises, contact };
+  const { hero, about, projects, contact } = useNavMenu();
+  const menu = { about, projects, contact };
 
   React.useEffect(() => {
     path === '/' && Object.values(menu).forEach(({ id }) =>
@@ -41,6 +42,7 @@ export const NavBar: React.FC<Props> = ({ path }) => {
         end: 'bottom top'
       }
     });
+    return () => ScrollTrigger.getAll().forEach((animation) => animation.kill());
   }, []);
 
   return (
