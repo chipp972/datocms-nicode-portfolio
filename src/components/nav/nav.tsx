@@ -47,8 +47,9 @@ export const NavBar: React.FC<Props> = ({ path }) => {
 
   return (
     <Section component="nav" className={css.navbar}>
-      <AnchorLink to={`/#${hero.id}`} title="Home">
+      <AnchorLink to={`/#${hero.id}`} title="Home" className={css.logo}>
         <Logo size={cssVar.xxlSize} />
+        <span className={css.logoText}>Nicode</span>
       </AnchorLink>
       <ul className={css.menu}>
         {Object.values(menu).map(({ id, sectionLabel }) => (

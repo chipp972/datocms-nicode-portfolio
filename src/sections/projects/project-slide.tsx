@@ -5,39 +5,32 @@ import { Modal } from '../../components/modal';
 import clsx from 'clsx';
 import { CloseIcon } from './close-icon';
 import { ProjectContent } from './project-content';
-import { gsap } from 'gsap';
+import { openProjectSlideAnimation, closeProjectSlideAnimation } from './project-slide.gsap';
 
 type Props = {
   projectIndex: number;
+  closeButtonLabel: string;
 };
 
-const zIndex = 1001;
-const desktopWidth = 1000;
-const wideScreenWidth = 1600;
-const xDesktopPosition = -50;
-const yDesktopPosition = -50;
-
-export const ProjectSlide: React.FC<Props> = ({ projectIndex }) => {
+export const ProjectSlide: React.FC<Props> = ({ projectIndex, closeButtonLabel }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isTransitionDone, setIsTransitionDone] = React.useState(true);
   const animationRef = React.useRef<gsap.core.Timeline>(null);
   const ref = React.useRef<HTMLDivElement>(null);
   const modalRef = React.useRef<HTMLDivElement>(null);
+  const modalId = `modal-${projectIndex}`;
 
   React.useEffect(() => {
     if (typeof document !== 'undefined') {
-      const isDesktop = window.innerWidth >= desktopWidth;
-      const isWideScreen = window.innerWidth >= wideScreenWidth;
-
       if (animationRef.current?.isActive()) {
         animationRef.current.kill();
       }
 
-      if (isExpanded) {
-        const { top, left, width, height } = ref.current?.getBoundingClientRect();
+      const { top, left, width, height } = ref.current?.getBoundingClientRect();
 
-        animationRef.current = gsap
-          .timeline({
+      if (isExpanded) {
+        animationRef.current = openProjectSlideAnimation({
+            id: modalId,
             onStart: () => {
               document.body.style.overflowY = 'hidden';
               setIsTransitionDone(false);
@@ -49,81 +42,35 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex }) => {
                 overflowY: 'auto',
                 delay: 1.5
               }).play();
-            }
-          })
-          .set(modalRef.current, {
-            xPercent: 0,
-            yPercent: 0,
+            },
             top,
             left,
             width,
-            height,
-            zIndex,
-            opacity: 1,
-            position: 'fixed',
-            pointerEvents: 'none',
-            overflow: 'hidden'
-          })
-          .to(modalRef.current, {
-            top,
-            left,
-            width,
-            height,
-            zIndex,
-            opacity: 1,
-            position: 'fixed'
-          })
-          .to(modalRef.current, {
-            xPercent: isDesktop ? xDesktopPosition : undefined,
-            yPercent: isDesktop && !isWideScreen ? yDesktopPosition : undefined,
-            top: isDesktop && !isWideScreen ? '50%' : 0,
-            left: isDesktop ? '50%' : 0,
-            width: isDesktop ? '800px' : '100vw',
-            height: isDesktop && !isWideScreen ? '90%' : '100vh',
-            zIndex,
-            opacity: 1,
-            duration: 0.35,
-            ease: 'power2.inOut'
-          });
-
-        animationRef.current.play();
+            height
+        }).play();
       } else {
-        const { top, left, width, height } = ref.current?.getBoundingClientRect();
-
-        animationRef.current = gsap
-          .timeline({
-            onComplete: () => {
-              document.body.style.overflowY = 'auto';
-            }
-          })
-          .to(modalRef.current, {
-            xPercent: isDesktop ? 0 : undefined,
-            yPercent: isDesktop ? 0 : undefined,
-            top,
-            left,
-            width,
-            height,
-            position: 'fixed',
-            ease: 'power2.inOut',
-            duration: 0.3
-          })
-          .set(modalRef.current, {
-            opacity: 0,
-            pointerEvents: 'none'
-          });
-
-        animationRef.current.play();
+        animationRef.current = closeProjectSlideAnimation({
+          id: modalId,
+          onComplete: () => {
+            document.body.style.overflowY = 'auto';
+          },
+          top,
+          left,
+          width,
+          height
+        }).play();
       }
     }
-  }, [isExpanded]);
+  }, [isExpanded, modalId]);
 
   return (
     <>
       <ProjectContent ref={ref} projectIndex={projectIndex} setIsExpanded={setIsExpanded} />
       <Modal>
-        <div ref={modalRef}>
-          <button className={css.closeButton} onClick={() => setIsExpanded(false)}>
+        <div id={modalId} ref={modalRef}>
+          <button title={closeButtonLabel} className={css.closeButton} onClick={() => setIsExpanded(false)}>
             <CloseIcon />
+            {closeButtonLabel}
           </button>
           <ProjectContent
             isModalContent

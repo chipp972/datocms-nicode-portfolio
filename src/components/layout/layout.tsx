@@ -5,6 +5,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { HelmetDatoCms } from 'gatsby-source-datocms';
 import { NavBar, BottomNavBar } from '../nav/nav';
 import { Footer } from '../footer/footer';
+import { WaveTransition } from './wave-transition';
 
 const layoutQuery = graphql`
   query LayoutQuery {
@@ -48,6 +49,7 @@ export const Layout: React.FC<Props> = ({ path, children }) => {
         </main>
         <BottomNavBar />
       </div>
+      <WaveTransition />
       <Footer />
     </>
   );

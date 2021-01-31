@@ -3,21 +3,25 @@
 .mainContainer
   transform: translate3d(0px, 0, 0)
   transition: transform 0.2s ease-in-out
+
   +tablet
     flex: 1
     overflow: hidden
 
 .section
-  padding: 0 scale(4)
+  padding: 0 scale(4) scale(10) scale(4)
   +big-mobile
-    padding: 0 scale(8)
+    padding: 0 scale(8) scale(10) scale(8)
+  +tablet
+    padding: 0 scale(10) scale(10) scale(10)
   +desktop
-    padding: 0 scale(14)
+    padding: 0 scale(12) scale(15) scale(12)
   +big-desktop
-    padding: 0 scale(16)
+    padding: 0 scale(14) scale(15) scale(14)
   +widescreen
-    padding: 0 scale(18)
+    padding: 0 scale(16) scale(15) scale(16)
 
 .fullWidthSection
-  padding: 0
+  padding-left: 0
+  padding-right: 0
   margin: 0

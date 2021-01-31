@@ -32,6 +32,7 @@ export type ProjectsContext = {
   title: string;
   sectionLabel: string;
   readMoreLabel: string;
+  closeButtonLabel: string;
   challengesLabel: string;
   checkSourceCodeLabel: string;
   checkWebsiteLabel: string;

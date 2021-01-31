@@ -1,0 +1,31 @@
+@import "../../theme/variables/variables"
+
+.navigationContainer
+  display: none
+  justify-content: space-between
+  +tablet
+    display: flex
+    position: absolute
+    top: 70%
+    width: 100%
+    justify-content: space-between
+  +widescreen
+    justify-content: space-around
+
+.navigation
+  display: flex
+  flex-flow: column nowrap
+  cursor: pointer
+  border: none
+  z-index: 1
+  background-color: transparent
+  align-items: center
+  padding: scale(3)
+  @include usual-text
+  font-weight: $bold
+  width: 130px
+
+  &:disabled
+    transition: opacity 0.15s ease-in-out
+    opacity: 0.3
+    cursor: auto

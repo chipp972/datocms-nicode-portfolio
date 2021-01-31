@@ -1,14 +1,14 @@
 @import "../../../theme/variables/variables"
 
-$card-border-radius: scale(7)
-
 .projectContent
-  box-shadow: 0px 2px 10px 0px $shadow-color
+  border: $card-border-width solid $dark-body-color
+  box-shadow: $big-shadow
   border-radius: $card-border-radius
 
   .innerContent
     padding: scale(5) scale(5) scale(7) scale(5)
     background-color: $bg-color
+    border-top: $card-border-width solid $dark-body-color
     border-radius: 0 0 $card-border-radius $card-border-radius
     transition: all 0.3s ease-in-out 0.35s
   

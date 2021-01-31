@@ -32,7 +32,7 @@ export const RessourceButtons: React.FC<Props> = ({
           href={project.websiteUrl}
           target="_blank"
           rel="noreferrer"
-          className={clsx(buttonCss.mediumButton, css.button, ressourceButtonWebsite)}>
+          className={clsx(buttonCss.ghostOrangeButton, css.button, ressourceButtonWebsite)}>
           {checkWebsiteLabel}
         </a>
       </Case>
@@ -41,7 +41,7 @@ export const RessourceButtons: React.FC<Props> = ({
           href={project.sourceCodeUrl}
           target="_blank"
           rel="noreferrer"
-          className={clsx(buttonCss.mediumButton, css.button, ressourceButtonSourceCode)}>
+          className={clsx(buttonCss.ghostGreenButton, css.button, ressourceButtonSourceCode)}>
           {checkSourceCodeLabel}
         </a>
       </Case>

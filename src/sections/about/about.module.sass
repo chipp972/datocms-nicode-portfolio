@@ -2,14 +2,28 @@
 
 .about
   background: $gradient-bg
-  margin-bottom: scale(15)
+
+  .title
+    @include title
+    font-weight: $bold
+    margin-bottom: scale(10)
+    +tablet
+      margin-bottom: scale(10)
+    +desktop
+      margin-bottom: scale(12)
 
   .photo
+    display: block
+    border-radius: 50%
     margin: 0 auto scale(8) auto
     max-width: 200px
     +tablet
       margin: 0 auto scale(10) auto
       max-width: 300px
+
+  .sectionImage
+    flex: 1
+    border-radius: 30px
 
   .intro
     @include highlighted-text

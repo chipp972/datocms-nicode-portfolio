@@ -1,29 +1,56 @@
 @import "../../theme/variables/variables"
 
-.hero
-  min-height: 100vh
+.heroWrapper
+  position: relative
 
-  .promise
-    line-height: 1.2
-    font-weight: $bold
-    font-size: size(4)
+  .hero
+    display: flex
+    padding-bottom: scale(15)
+    max-width: 100%
+    +desktop
+      width: 50%
+
+    .promise
+      line-height: 1.2
+      font-weight: $bold
+      font-size: size(4)
+      margin-top: scale(7)
+      +tablet
+        margin-top: scale(15)
+        font-size: size(6)
+        padding: scale(6) 0
+      +desktop
+        font-size: size(7)
+      +widescreen
+        font-size: size(8)
+      
+    .subtitle
+      line-height: 1.4
+      font-size: size(2)
+      margin: scale(8) 0 scale(7) 0
+      text-shadow: 0 0 $light-bg-color
+      +tablet
+        font-size: size(3)
+      +desktop
+        font-size: size(4)
+      +widescreen
+        font-size: size(5)
+
+  .imageWrapper
+    position: absolute
+    bottom: 0
+    right: 0
+    z-index: -1
     margin-top: scale(7)
+    max-height: 500px
+    width: 100%
+    max-width: 800px
+    +big-mobile
+      top: 0
+      opacity: 0.3
     +tablet
       margin-top: scale(15)
-      font-size: size(6)
-      padding: scale(6) 0
-    +desktop
-      font-size: size(7)
     +widescreen
-      font-size: size(8)
-    
-  .subtitle
-    line-height: 1.4
-    font-size: size(2)
-    margin: scale(8) 0 scale(2) 0
-    +tablet
-      font-size: size(3)
-    +desktop
-      font-size: size(4)
-    +widescreen
-      font-size: size(5)
+      bottom: auto
+      opacity: 1
+      max-width: calc(50% - #{scale(14)})

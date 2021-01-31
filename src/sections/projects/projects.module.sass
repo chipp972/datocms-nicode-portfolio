@@ -5,7 +5,7 @@
   --swiper-theme-color: #{$greenA700}
 
 .projectsSection
-  margin-bottom: scale(15)
+  background: $reverse-gradient-bg
 
 .swiperContainer
   position: relative
@@ -17,36 +17,13 @@
   +tablet
     min-height: 700px
 
-.navigationContainer
-  display: flex
-  justify-content: space-between
-  +tablet
-    position: absolute
-    top: 70%
-    z-index: 1
-    width: 100%
-    justify-content: space-between
-  +widescreen
-    justify-content: space-around
-
-.navigation
-  display: flex
-  flex-flow: column nowrap
-  cursor: pointer
-  border: none
-  background-color: transparent
-  align-items: center
-  padding: scale(3)
-  @include usual-text
-  font-weight: $bold
-  width: 130px
-
 .title
   @include title
   font-weight: $bold
   margin-bottom: scale(10)
-
   +tablet
+    margin-bottom: scale(10)
+  +desktop
     margin-bottom: scale(12)
 
 .projectCard
@@ -81,6 +58,9 @@
   z-index: 1
   cursor: pointer
   transition: transform 0.1s ease-in-out 
+  color: $light-bg-color
+  font-weight: $bold
+  @include small-text
   +tablet
     width: scale(12)
     height: scale(12)

@@ -9,6 +9,7 @@ const query = graphql`
   query AboutSectionQuery {
     about: datoCmsAboutSection {
       id
+      title
       photo {
         alt
         fluid(maxWidth: 300, imgixParams: { fm: "jpg", auto: "compress" }) {
@@ -64,6 +65,7 @@ const query = graphql`
 type AboutSectionQuery = {
   about: {
     id: string;
+    title?: string;
     photo: {
       alt: string;
       fluid: FluidObject;
@@ -96,10 +98,10 @@ export const About: React.FC = () => {
   const { about } = useStaticQuery<AboutSectionQuery>(query);
   return (
     <Section id={about.id} className={css.about}>
+      {about.title && <h2 className={css.title}>{about.title}</h2>}
       <Img
         className={css.photo}
         fluid={about.photo.fluid}
-        style={{ display: 'block' }}
         alt={about.photo.alt}
       />
       <section
@@ -112,14 +114,14 @@ export const About: React.FC = () => {
           dangerouslySetInnerHTML={{ __html: about.companiesNode.childMarkdownRemark.html }}
         />
         <Img
-          style={{ flex: 1, borderRadius: 50 }}
+          className={css.sectionImage}
           fluid={about.companiesImage.fluid}
           alt={about.companiesImage.alt}
         />
       </section>
       <section className={css.technosBloc}>
         <Img
-          style={{ flex: 1, borderRadius: 50 }}
+          className={css.sectionImage}
           fluid={about.technosImage.fluid}
           alt={about.technosImage.alt}
         />

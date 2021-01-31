@@ -1,10 +1,19 @@
 @import "../../../../theme/variables/variables"
 
-.title
-  @include important-text
-  font-weight: $bold
-  margin-bottom: scale(5)
+.smallContent
+  position: relative
 
-.excerpt
-  @include usual-text
-  margin-bottom: scale(5)
+  .title
+    @include important-text
+    font-weight: $bold
+    margin-bottom: scale(5)
+
+  .excerpt
+    @include usual-text
+    margin-bottom: scale(5)
+
+  .button
+    position: absolute
+    left: 50%
+    transform: translateX(-50%)
+    z-index: 1 

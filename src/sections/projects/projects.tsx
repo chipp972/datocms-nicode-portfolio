@@ -10,7 +10,8 @@ import SwiperCore, { Keyboard } from 'swiper';
 import { ProjectsContext as ProjectsContextType } from './projects.type';
 import { ProjectSlide } from './project-slide';
 import { ProjectsContext } from './projects.context';
-import { ArrowIcon, ArrowDirection } from './arrow-icon';
+import { ProjectsNavigation } from './navigation';
+import { ProjectsPagination } from './pagination';
 
 SwiperCore.use([Keyboard]);
 
@@ -27,6 +28,7 @@ export const projectsQuery = graphql`
       title
       sectionLabel
       readMoreLabel
+      closeButtonLabel
       challengesLabel
       checkSourceCodeLabel
       checkWebsiteLabel
@@ -70,14 +72,25 @@ export const projectsQuery = graphql`
 
 export const Projects: React.FC = () => {
   const { projects } = useStaticQuery<ProjectsSectionQuery>(projectsQuery);
-  const [swiperRef, setSwiperRef] = React.useState(null);
+  const [swiperRef, setSwiperRef] = React.useState<SwiperCore>(null);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
+  const [isStart, setIsStart] = React.useState(true);
+  const [isEnd, setIsEnd] = React.useState(false);
+
+  const slideTo = React.useCallback((index) => swiperRef.slideTo(index), [swiperRef]);
+  const slideNext = React.useCallback(() => swiperRef.slideNext(), [swiperRef]);
+  const slidePrev = React.useCallback(() => swiperRef.slidePrev(), [swiperRef]);
 
   return (
     <ProjectsContext.Provider value={projects}>
       <Section className={css.projectsSection} isFullWidth id={projects.id}>
-        <Section>
+        <Section style={{ paddingBottom: 0 }}>
           <h2 className={css.title}>{projects.title}</h2>
+          <ProjectsPagination
+            currentSlideIndex={currentSlideIndex}
+            projectList={projects.projectList}
+            slideTo={slideTo}
+          />
         </Section>
         <div className={css.swiperContainer}>
           <Swiper
@@ -85,6 +98,12 @@ export const Projects: React.FC = () => {
             autoHeight
             speed={500}
             centeredSlides
+            onReachBeginning={() => setIsStart(true)}
+            onReachEnd={() => setIsEnd(true)}
+            onFromEdge={() => {
+              setIsStart(false);
+              setIsEnd(false);
+            }}
             onSlideChange={(swiper) => setCurrentSlideIndex(swiper.activeIndex)}
             onSwiper={setSwiperRef}
             breakpoints={{
@@ -124,21 +143,19 @@ export const Projects: React.FC = () => {
                     transform: isCurrentSlide ? 'scale(1)' : 'scale(0.6)',
                     opacity: isCurrentSlide ? 1 : 0.6
                   }}>
-                  <ProjectSlide projectIndex={index} />
+                  <ProjectSlide projectIndex={index} closeButtonLabel={projects.closeButtonLabel} />
                 </SwiperSlide>
               );
             })}
           </Swiper>
-          <div className={css.navigationContainer}>
-            <button className={css.navigation} onClick={() => swiperRef.slidePrev()}>
-              <ArrowIcon size={50} direction={ArrowDirection.left} />
-              {projects.previousProjectLabel}
-            </button>
-            <button className={css.navigation} onClick={() => swiperRef.slideNext()}>
-              <ArrowIcon size={50} direction={ArrowDirection.right} />
-              {projects.nextProjectLabel}
-            </button>
-          </div>
+          <ProjectsNavigation
+            isStart={isStart}
+            isEnd={isEnd}
+            slideNext={slideNext}
+            slidePrev={slidePrev}
+            previousProjectLabel={projects.previousProjectLabel}
+            nextProjectLabel={projects.nextProjectLabel}
+          />
         </div>
       </Section>
     </ProjectsContext.Provider>
