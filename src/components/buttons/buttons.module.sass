@@ -2,7 +2,7 @@
 
 .gradientOrangeButton
   @include usual-text
-  display: inline-flex;
+  display: block;
   border-radius: $button-border-radius
   border: $button-border-width solid $dark-body-color
   color: $dark-body-color
@@ -15,11 +15,17 @@
   text-decoration: none;
   box-shadow: $big-shadow
   transition: 0.15s transform ease-in-out, 0.15s box-shadow ease-in-out
+  text-align: center
+  max-width: 300px
+  margin: 0 auto
 
   &:hover,
   &:focus-within
     transform: translate(10px, 10px)
     box-shadow: $small-shadow
+
+  +tablet
+    display: inline-flex
 
 .gradientGreenButton
   @include usual-text
@@ -35,6 +41,9 @@
   text-decoration: none;
   box-shadow: $small-shadow
   transition: 0.15s transform ease-in-out, 0.15s box-shadow ease-in-out
+  text-align: center
+  justify-content: center
+  min-width: 120px
 
   &:hover,
   &:focus-within
