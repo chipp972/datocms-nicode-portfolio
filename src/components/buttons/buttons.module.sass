@@ -29,7 +29,7 @@
 
 .gradientGreenButton
   @include usual-text
-  display: inline-flex;
+  display: block;
   border-radius: $button-border-radius
   border: $button-border-width solid $dark-body-color
   color: $dark-body-color
@@ -43,7 +43,6 @@
   transition: 0.15s transform ease-in-out, 0.15s box-shadow ease-in-out
   text-align: center
   justify-content: center
-  min-width: 120px
 
   &:hover,
   &:focus-within
