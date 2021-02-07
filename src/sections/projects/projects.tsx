@@ -10,8 +10,8 @@ import SwiperCore, { Keyboard } from 'swiper';
 import { ProjectsContext as ProjectsContextType } from './projects.type';
 import { ProjectSlide } from './project-slide';
 import { ProjectsContext } from './projects.context';
-import { ProjectsNavigation } from './navigation';
-import { ProjectsPagination } from './pagination';
+import { ProjectsNavigation } from './project-navigation/navigation';
+import { ProjectsPagination } from './project-navigation/pagination';
 
 SwiperCore.use([Keyboard]);
 

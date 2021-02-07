@@ -7,10 +7,16 @@ import clsx from 'clsx';
 type Props = {
   className: string;
   projectIndex: number;
+  isExpanded: boolean;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const SmallContent: React.FC<Props> = ({ className, projectIndex, setIsExpanded }) => {
+export const SmallContent: React.FC<Props> = ({
+  className,
+  projectIndex,
+  isExpanded,
+  setIsExpanded
+}) => {
   const { projectList, readMoreLabel } = React.useContext(ProjectsContext);
   const project = projectList[projectIndex];
 
@@ -25,7 +31,9 @@ export const SmallContent: React.FC<Props> = ({ className, projectIndex, setIsEx
       />
       <button
         onClick={() => setIsExpanded(true)}
-        className={clsx(buttonCss.gradientGreenButton, css.button)}>
+        className={clsx(buttonCss.gradientGreenButton, css.button, {
+          [css.buttonHidden]: isExpanded
+        })}>
         {readMoreLabel}
       </button>
     </div>

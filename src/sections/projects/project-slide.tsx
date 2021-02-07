@@ -19,6 +19,7 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, closeButtonLabel }
   const ref = React.useRef<HTMLDivElement>(null);
   const modalRef = React.useRef<HTMLDivElement>(null);
   const modalId = `modal-${projectIndex}`;
+  const cardId = `card-${projectIndex}`;
 
   React.useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -46,7 +47,8 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, closeButtonLabel }
             top,
             left,
             width,
-            height
+            height,
+            cardId
         }).play();
       } else {
         animationRef.current = closeProjectSlideAnimation({
@@ -57,7 +59,8 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, closeButtonLabel }
           top,
           left,
           width,
-          height
+          height,
+          cardId
         }).play();
       }
     }
@@ -65,7 +68,13 @@ export const ProjectSlide: React.FC<Props> = ({ projectIndex, closeButtonLabel }
 
   return (
     <>
-      <ProjectContent ref={ref} projectIndex={projectIndex} setIsExpanded={setIsExpanded} />
+      <div id={cardId}>
+        <ProjectContent
+          ref={ref}
+          projectIndex={projectIndex}
+          setIsExpanded={setIsExpanded}
+        />
+      </div>
       <Modal>
         <div id={modalId} ref={modalRef}>
           <button title={closeButtonLabel} className={css.closeButton} onClick={() => setIsExpanded(false)}>

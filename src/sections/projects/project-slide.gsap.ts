@@ -9,7 +9,7 @@ export const wideScreenWidth = 1600;
 export const xDesktopPosition = -50;
 export const yDesktopPosition = -50;
 
-export const openProjectSlideAnimation = ({ id, onStart, onComplete, top, left, width, height }) => {
+export const openProjectSlideAnimation = ({ id, cardId, onStart, onComplete, top, left, width, height }) => {
   const isDesktop = window.innerWidth >= desktopWidth;
   const isWideScreen = window.innerWidth >= wideScreenWidth;
 
@@ -28,6 +28,9 @@ export const openProjectSlideAnimation = ({ id, onStart, onComplete, top, left, 
       pointerEvents: 'none',
       overflow: 'hidden'
     })
+    .set(toDomId(cardId), {
+      visibility: 'hidden'
+    })
     .to(toDomId(id), {
       top,
       left,
@@ -35,7 +38,8 @@ export const openProjectSlideAnimation = ({ id, onStart, onComplete, top, left, 
       height,
       zIndex,
       opacity: 1,
-      position: 'fixed'
+      position: 'fixed',
+      duration: 0.3
     })
     .to(toDomId(id), {
       xPercent: isDesktop ? xDesktopPosition : undefined,
@@ -51,7 +55,7 @@ export const openProjectSlideAnimation = ({ id, onStart, onComplete, top, left, 
     });
 };
 
-export const closeProjectSlideAnimation = ({ id, onComplete, top, width, height, left }) => {
+export const closeProjectSlideAnimation = ({ id, cardId, onComplete, top, width, height, left }) => {
   const isDesktop = window.innerWidth >= desktopWidth;
 
   return gsap
@@ -70,5 +74,8 @@ export const closeProjectSlideAnimation = ({ id, onComplete, top, width, height,
     .set(toDomId(id), {
       opacity: 0,
       pointerEvents: 'none'
-    });
+    })
+    .set(toDomId(cardId), {
+      visibility: 'visible'
+    }, '<');
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import css from './pagination.module.sass';
-import { Project } from './projects.type';
+import { Project } from '../projects.type';
 
 type Props = {
   projectList: Project[];

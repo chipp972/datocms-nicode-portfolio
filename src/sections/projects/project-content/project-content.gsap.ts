@@ -65,23 +65,19 @@ export const extendContentAnimation = ({ gsapClassnames, setShowTechnos }) =>
     .fromTo(
       `.${gsapClassnames.ressourceButtonWebsite}`,
       {
-        opacity: 0,
-        marginLeft: 20
+        opacity: 0
       },
       {
-        opacity: 1,
-        marginLeft: 0
+        opacity: 1
       }
     )
     .fromTo(
       `.${gsapClassnames.ressourceButtonSourceCode}`,
       {
-        opacity: 0,
-        marginLeft: 20
+        opacity: 0
       },
       {
-        opacity: 1,
-        marginLeft: 0
+        opacity: 1
       }
     );
 

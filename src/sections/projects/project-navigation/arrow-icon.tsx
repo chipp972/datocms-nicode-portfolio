@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import css from './projects-icon.module.sass';
+import css from '../projects-icon.module.sass';
 
 export enum ArrowDirection {
   left = 'left',

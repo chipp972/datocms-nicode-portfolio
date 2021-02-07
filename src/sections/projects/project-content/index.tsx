@@ -16,10 +16,11 @@ type Props = {
   isModalContent?: boolean;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isTransitionDone?: boolean;
+  style?: React.CSSProperties;
 };
 
 const _ProjectContent: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
-  { projectIndex, isModalContent = false, setIsExpanded, isExpanded = false, isTransitionDone = false },
+  { projectIndex, isModalContent = false, setIsExpanded, isExpanded = false, isTransitionDone = false, style },
   ref = React.createRef()
 ) => {
   const { projectList } = React.useContext(ProjectsContext);
@@ -50,7 +51,7 @@ const _ProjectContent: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
   });
 
   return (
-    <div ref={ref} className={css.projectContent}>
+    <div ref={ref} style={style} className={css.projectContent}>
       <ProjectHeader
         overlayClassname={gsapClassnames.headerOverlay}
         titleClassname={gsapClassnames.headerTitle}
@@ -65,6 +66,7 @@ const _ProjectContent: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
         <SmallContent
           className={gsapClassnames.smallContent}
           projectIndex={projectIndex}
+          isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
         />
         <ExpandedContent
