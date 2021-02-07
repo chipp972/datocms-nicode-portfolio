@@ -6,8 +6,10 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { LinkedInIcon } from '../../components/social/linkedin-icon';
 import { MailIcon } from './mail-icon';
 import { PhoneIcon } from './phone-icon';
-import { gsap } from 'gsap';
 import { Loader } from '../../components/loader/loader';
+import { ContactType, ContactSectionQuery } from './contact.type';
+import { getContactMethodId, contactMethodEnterAnimation } from './contact.gsap';
+import { useGsapAnimation } from '../../helpers/gsap-react';
 
 const query = graphql`
   query ContactSectionQuery {
@@ -46,42 +48,11 @@ const query = graphql`
   }
 `;
 
-enum ContactType {
-  Email = 'Email',
-  LinkedIn = 'LinkedIn',
-  Phone = 'Phone'
-}
-
 export const icon = {
   [ContactType.LinkedIn]: LinkedInIcon,
   [ContactType.Email]: MailIcon,
   [ContactType.Phone]: PhoneIcon
 };
-
-type ContactMethod = {
-  id: string;
-  contactType: ContactType;
-  position: number;
-  label: string;
-  detailsNode: MarkdownField;
-  url: string;
-};
-
-type ContactSectionQuery = {
-  contact: {
-    id: string;
-    sectionLabel: string;
-    descriptionNode: MarkdownField;
-    rdvDescriptionNode: MarkdownField;
-    calendlyUrl: string;
-    fallbackText: string;
-  };
-  contactMethods: {
-    edges: { node: ContactMethod }[];
-  };
-};
-
-const getContactMethodId = (id: string) => `contact-method-${id}`;
 
 const CalendarFallback: React.FC<{ fallbackText: string }> = ({ fallbackText }) => (
   <div className={css.fallback}>
@@ -98,31 +69,13 @@ export const Contact: React.FC = () => {
   const [isVisible, setIsVisible] = React.useState(false);
   const isSSR = typeof window === 'undefined';
 
-  React.useEffect(() => {
-    const animationTimeline = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: `#${contact.id}`,
-          start: 'top center',
-          end: 'bottom bottom'
-        },
-        onComplete: () => {
-          setIsVisible(true);
-        }
-      });
-
-    contactMethods.edges.forEach(({ node: { id } }) => {
-      animationTimeline.fromTo(`#${getContactMethodId(id)}`, {
-        opacity: 0,
-        yPercent: -20
-      }, {
-        opacity: 1,
-        yPercent: 0,
-        ease: 'power2.inOut',
-        duration: 0.5
-      });
-    });
-  }, []);
+  useGsapAnimation({
+    animationFn: () => contactMethodEnterAnimation({
+      query: { contact, contactMethods },
+      onComplete: () => setIsVisible(true)
+    }),
+    dependencyList: []
+  });
 
   return (
     <Section id={contact.id} className={css.contact}>

@@ -47,6 +47,7 @@ declare type PageProps<FrontMatter = any, Node = any> = {
 declare type SvgProps = {
   size?: number;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 declare type MarkdownField = {

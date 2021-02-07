@@ -29,10 +29,13 @@
       font-size: size(2)
       margin: scale(8) 0 scale(7) 0
       text-shadow: 0 0 $light-bg-color
+      +big-mobile
+        font-weight: $bold
       +tablet
         font-size: size(3)
       +desktop
         font-size: size(4)
+        font-weight: normal
       +widescreen
         font-size: size(5)
 
@@ -45,12 +48,23 @@
     max-height: 500px
     width: 100%
     max-width: 800px
-    +big-mobile
-      top: 0
+    @media screen and (min-width: 470px)
       opacity: 0.3
     +tablet
+      top: 0
       margin-top: scale(15)
     +widescreen
       bottom: auto
       opacity: 1
       max-width: calc(50% - #{scale(14)})
+
+  .smallLogo
+    display: none
+    +desktop
+      display: block
+      position: absolute
+      z-index: 1
+      top: 0
+      left: 0
+      animation: floating 2s ease-in-out infinite both
+      box-shadow: $small-shadow
