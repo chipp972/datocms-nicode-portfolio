@@ -8,7 +8,7 @@
     padding-bottom: scale(15)
     max-width: 100%
     +desktop
-      width: 50%
+      width: 40%
 
     .promise
       line-height: 1.2
@@ -26,18 +26,23 @@
       
     .subtitle
       line-height: 1.4
-      font-size: size(2)
-      margin: scale(8) 0 scale(7) 0
+      font-size: size(1)
+      margin: scale(8) 0 scale(11) 0
       text-shadow: 0 0 $light-bg-color
       +big-mobile
         font-weight: $bold
       +tablet
-        font-size: size(3)
+        font-size: size(2)
       +desktop
-        font-size: size(4)
+        font-size: size(3)
         font-weight: normal
       +widescreen
-        font-size: size(5)
+        font-size: size(4)
+
+    .cta
+      display: none
+      +tablet
+        display: inline-flex
 
   .imageWrapper
     position: absolute

@@ -16,10 +16,11 @@
     position: absolute
     left: 50%
     transform: translateX(-50%)
-    z-index: 1 
-    transition: opacity 0.2s ease-in-out
+    z-index: 1
+    transition: opacity 0.15s ease-in
     // fix on ios devices
     white-space: nowrap
 
     &Hidden
       opacity: 0
+      pointer-events: none;

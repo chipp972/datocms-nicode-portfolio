@@ -55,18 +55,18 @@ export const Hero = () => {
           />
           <AnchorLink
             gatsbyLinkProps={{
-              className: clsx(buttonCss.gradientOrangeButton, gsapClassnames.cta)
+              className: clsx(buttonCss.gradientOrangeButton, gsapClassnames.cta, css.cta)
             }}
             to={`/#${about.id}`}
             title={hero.goToAboutSectionCtaLabel}>
             {hero.goToAboutSectionCtaLabel}
           </AnchorLink>
         </div>
+        <div className={clsx(css.imageWrapper, gsapClassnames.image)}>
+          <Img alt={hero.illustration.alt} fluid={hero.illustration.fluid} />
+        </div>
+        <LogoAnimation />
       </Section>
-      <div className={clsx(css.imageWrapper, gsapClassnames.image)}>
-        <Img alt={hero.illustration.alt} fluid={hero.illustration.fluid} />
-      </div>
-      <LogoAnimation />
     </div>
   );
 };

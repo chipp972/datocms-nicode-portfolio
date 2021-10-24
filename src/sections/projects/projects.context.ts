@@ -11,5 +11,6 @@ export const ProjectsContext = React.createContext<ProjectsContextType>({
   checkWebsiteLabel: 'Voir le site',
   nextProjectLabel: 'suivant',
   previousProjectLabel: 'précédent',
+  closeButtonLabel: 'Fermer',
   projectList: []
 });

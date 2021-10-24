@@ -38,9 +38,6 @@
     "react-case-when": "0.0.2",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
-    "react-masonry-component": "^6.2.1",
-    "react-slick": "^0.27.13",
-    "slick-carousel": "^1.8.1",
     "smoothscroll-polyfill": "0.4.4",
     "swiper": "6.4.5"
   },
